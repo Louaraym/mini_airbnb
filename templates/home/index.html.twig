@@ -1,0 +1,149 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <main role="main" class="container text-center">
+        <div class="jumbotron">
+            <h1>Bienveue sur Mini airbnb</h1>
+            <p class="lead">Nous mettons en relations les voyageurs et les propriétaires qui veulent profiter d'opportunités et gagner de l'argent en proposant leur bien à la location !</p>
+            <hr>
+            <p>Vous êtes voyageur ? Et vous voulez voir où vous pourrez loger pour votre prochain déplacement ?</p>
+            <a class="btn btn-lg btn-secondary" href="#" role="button">Voir nos annonces »</a>
+        </div>
+    </main>
+
+    <div class="container">
+        <h2 class="text-center mt-5 mb-5">Nos annonces stars !!!</h2>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+            <div class="col mb-4">
+                <div class="card h-100">
+                    <div class="card-header text-center">
+                       2 chambres, <strong>50 euros / nuit</strong> <br>
+                        <small>Pas encore notée</small>
+                    </div>
+                    <img src="{{ asset('images/villa.jpg') }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta ea eius exercitationem odio odit quasi quidem quis recusandae rerum? Accusantium corporis, deserunt dolor fuga ipsam labore modi temporibus! Ex, obcaecati?</p>
+                        <a href="#" class="btn btn-secondary">Voir l'annonce</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-4">
+                <div class="card h-100">
+                    <div class="card-header text-center">
+                        5 chambres, <strong>100 euros / nuit</strong> <br>
+                        <small>Pas encore notée</small>
+                    </div>
+                    <img src="{{ asset('images/villa.jpg') }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aliquam asperiores atque aut cum iusto, nisi odit reprehenderit sed sunt. Aliquid cum delectus, dolor ea eos expedita fuga laborum tenetur!</p>
+                        <a href="#" class="btn btn-secondary">Voir l'annonce</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-4">
+                <div class="card h-100">
+                    <div class="card-header text-center">
+                        2 chambres, <strong>50 euros / nuit</strong> <br>
+                        <small>Pas encore notée</small>
+                    </div>
+                    <img src="{{ asset('images/villa.jpg') }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo ipsa minus necessitatibus nostrum officiis. Architecto eligendi natus nihil, nisi quae quas? Accusamus adipisci dolore eligendi eum harum magni sit tenetur?</p>
+                        <a href="#" class="btn btn-secondary">Voir l'annonce</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-4">
+                <div class="card h-100">
+                    <div class="card-header text-center">
+                        4 chambres, <strong>70 euros / nuit</strong> <br>
+                        <small>Pas encore notée</small>
+                    </div>
+                    <img src="{{ asset('images/villa.jpg') }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad assumenda cupiditate delectus, doloremque ipsa laborum nemo omnis placeat quidem reprehenderit sapiente sequi ut voluptate voluptatum. Accusantium ipsum, voluptatem! Commodi?</p>
+                        <a href="#" class="btn btn-secondary">Voir l'annonce</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-4">
+                <div class="card h-100">
+                    <div class="card-header text-center">
+                        2 chambres, <strong>50 euros / nuit</strong> <br>
+                        <small>Pas encore notée</small>
+                    </div>
+                    <img src="{{ asset('images/villa.jpg') }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus accusantium ad, amet aperiam aut culpa debitis distinctio expedita fugiat id maiores minima minus nobis numquam optio possimus unde voluptas voluptates.</p>
+                        <a href="#" class="btn btn-secondary">Voir l'annonce</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-4">
+                <div class="card h-100">
+                    <div class="card-header text-center">
+                        3 chambres, <strong>59 euros / nuit</strong> <br>
+                        <small>Pas encore notée</small>
+                    </div>
+                    <img src="{{ asset('images/villa.jpg') }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci beatae consequuntur deserunt distinctio dolores ex explicabo, ipsa laborum maiores nam neque pariatur, perferendis placeat quas quo reprehenderit sit sunt tenetur?</p>
+                        <a href="#" class="btn btn-secondary">Voir l'annonce</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h2 class="text-center mt-2 mb-5">Nos propriétaires stars !!!</h2>
+        <div class="row row-cols-1 row-cols-md-3">
+            <div class="col mb-4">
+                <div class="card border-secondary mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Raymond LOUA</h5>
+                        <hr>
+                        <div class="card-text">
+                            <img src="http://placehold.it/64x64" alt="Avatar de Raymond" class="float-left mr-3">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, vero?</p>
+                            <a href="#" class="btn btn-secondary float-right">Visiter son profil</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-4">
+                <div class="card border-secondary mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Raymond LOUA</h5>
+                        <hr>
+                        <div class="card-text">
+                            <img src="http://placehold.it/64x64" alt="Avatar de Raymond" class="float-left mr-3">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, vero?</p>
+                            <a href="#" class="btn btn-secondary float-right">Visiter son profil</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-4">
+                <div class="card border-secondary mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Raymond LOUA</h5>
+                        <hr>
+                        <div class="card-text">
+                            <img src="http://placehold.it/64x64" alt="Avatar de Raymond" class="float-left mr-3">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, vero?</p>
+                            <a href="#" class="btn btn-secondary float-right">Visiter son profil</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
