@@ -5,13 +5,19 @@ namespace App\Entity;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\AdRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\AdvertRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(
+ *     fields={"title"},
+ *     message="Ce titre a déjà été choisi, veuillez choisir un autre."
+ * )
  */
-class Ad
+class Advert
 {
     /**
      * @ORM\Id()
@@ -22,6 +28,13 @@ class Ad
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 10,
+     *      max = 255,
+     *      minMessage = "Le titre doit avoir au moins {{ limit }} caractères",
+     *      maxMessage = "Le titre ne doit pas dépasser {{ limit }} caractères",
+     *      allowEmptyString = false
+     * )
      */
     private $title;
 
@@ -32,31 +45,53 @@ class Ad
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\GreaterThanOrEqual(
+     *     value = 0,
+     *     message="Le prix ne peut être négatif !"
+     * )
      */
     private $price;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(
+     *      min = 25,
+     *      minMessage = "La description globale doit avoir au moins {{ limit }} caractères",
+     *      allowEmptyString = false
+     * )
      */
     private $introduction;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(
+     *      min = 100,
+     *      minMessage = "La description détaillée doit avoir au moins {{ limit }} caractères",
+     *      allowEmptyString = false
+     * )
      */
     private $content;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Url(
+     *    message = "L'url '{{ value }}' n'est pas un url valide",
+     * )
      */
     private $coverImage;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\GreaterThanOrEqual(
+     *     value = 1,
+     *     message="Le nombre de chambres doit être supérieur ou égal à 1 !"
+     * )
      */
     private $rooms;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="ad", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="advert", orphanRemoval=true, cascade={"persist"})
+     * @Assert\Valid
      */
     private $images;
 
@@ -178,7 +213,7 @@ class Ad
     {
         if (!$this->images->contains($image)) {
             $this->images[] = $image;
-            $image->setAd($this);
+            $image->setAdvert($this);
         }
 
         return $this;
@@ -189,8 +224,8 @@ class Ad
         if ($this->images->contains($image)) {
             $this->images->removeElement($image);
             // set the owning side to null (unless already changed)
-            if ($image->getAd() === $this) {
-                $image->setAd(null);
+            if ($image->getAdvert() === $this) {
+                $image->setAdvert(null);
             }
         }
 

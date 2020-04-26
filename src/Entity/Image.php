@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,19 +19,27 @@ class Image
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Url(
+     *    message = "L'url '{{ value }}' n'est pas un url valide",
+     * )
      */
     private $url;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 10,
+     *      minMessage = "Le titre doit avoir au moins {{ limit }} caractères",
+     *      allowEmptyString = false
+     * )
      */
     private $caption;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Ad", inversedBy="images")
+     * @ORM\ManyToOne(targetEntity="Advert", inversedBy="images")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $ad;
+    private $advert;
 
     public function getId(): ?int
     {
@@ -61,14 +70,14 @@ class Image
         return $this;
     }
 
-    public function getAd(): ?Ad
+    public function getAdvert(): ?Advert
     {
-        return $this->ad;
+        return $this->advert;
     }
 
-    public function setAd(?Ad $ad): self
+    public function setAdvert(?Advert $advert): self
     {
-        $this->ad = $ad;
+        $this->advert = $advert;
 
         return $this;
     }

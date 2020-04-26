@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block title %}Ajout nouvelle annonce{% endblock %}
+{% form_theme form 'advert/_collection.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">
+            Ajouter une nouvelle annonce <a href="{{ path('advert_index') }}" class="btn btn-secondary float-right">Retour aux annonces</a>
+        </h1>
+        {{ include('advert/_form.html.twig') }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/js/advert.js"></script>
+{% endblock %}

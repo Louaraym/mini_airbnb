@@ -1,0 +1,16 @@
+div.annonce-title{
+    padding: 1em;
+    background-size: cover;
+    background-position: center center;
+}
+div.annonce-title h1, div.annonce-title p {
+    color: white;
+    text-shadow: 3px 3px 3px rgba(0,0,0,0.5);
+}
+div.carousel-caption{
+    text-shadow: 3px 3px 3px rgba(0,0,0,0.5);
+}
+
+a{
+    text-decoration: none !important;
+}
