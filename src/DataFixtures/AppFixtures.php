@@ -45,16 +45,28 @@ class AppFixtures extends Fixture
             $avatarUrl .= ($genre === 'male' ? 'men/' : 'women/') . $avatarId;
 
             $user->setFirstName($this->faker->firstName($genre))
-                ->setLastName($this->faker->lastName)
-                ->setEmail(strtolower($user->getLastName().'@gmail.com'))
-                ->setIntroduction($this->faker->paragraph(2))
-                ->setDescription($description)
-                ->setPassword($this->encoder->encodePassword($user, $user->getLastName()))
-                ->setAvatarUrl($avatarUrl)
+                 ->setLastName($this->faker->lastName)
+                 ->setEmail(strtolower($user->getLastName().'@gmail.com'))
+                 ->setIntroduction($this->faker->paragraph(2))
+                 ->setDescription($description)
+                 ->setPassword($this->encoder->encodePassword($user, $user->getLastName()))
+                 ->setAvatarUrl($avatarUrl)
             ;
             $this->entityManager->persist($user);
             $users[] = $user;
         }
+
+        $admin = new User();
+        $description = '<p>' . implode('</p><p>', $this->faker->paragraphs(3)) . '</p>';
+
+        $admin->setFirstName('Raymond')
+              ->setLastName('LOUA')
+              ->setEmail('admin@gmail.com')
+              ->setIntroduction($this->faker->paragraph(2))
+              ->setDescription($description)
+              ->setPassword($this->encoder->encodePassword($admin, 'admin'))
+              ->setRoles([User::ROLE_ADMIN]);
+        $this->entityManager->persist($admin);
 
         for ($i=0; $i<42; $i++){
             $advert = new Advert();

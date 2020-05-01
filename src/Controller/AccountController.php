@@ -3,10 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\PasswordEdit;
-use App\Entity\User;
 use App\Form\AccountType;
 use App\Form\PasswordEditType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,11 +15,12 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/account")
+ * @Security("is_granted('ROLE_USER')")
  */
 class AccountController extends AbstractController
 {
     /**
-     * @Route("/", name="account", requirements={"slug": "[a-z0-9\-]*"})
+     * @Route("/", name="account")
      * @return Response
      */
     public function index(): Response
@@ -30,14 +31,14 @@ class AccountController extends AbstractController
     }
 
     /**
-     * @Route("/edit/profile/{id}", name="account_profile_edit", methods={"GET","POST"}, requirements={"slug": "[a-z0-9\-]*"})
+     * @Route("/edit/profile", name="account_profile_edit", methods={"GET","POST"})
      * @param Request $request
-     * @param User $user
      * @param EntityManagerInterface $entityManager
      * @return Response
      */
-    public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
 
         $form = $this->createForm(AccountType::class, $user);
         $form->handleRequest($request);
@@ -59,18 +60,16 @@ class AccountController extends AbstractController
     }
 
     /**
-     * @Route("/edit/password/{id}", name="account_password_edit", methods={"GET","POST"}, requirements={"slug": "[a-z0-9\-]*"})
+     * @Route("/edit/password", name="account_password_edit", methods={"GET","POST"}, requirements={"slug": "[a-z0-9\-]*"})
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @param Request $request
-     * @param User $user
      * @param EntityManagerInterface $entityManager
      * @return Response
      */
-    public function editPassword(UserPasswordEncoderInterface $passwordEncoder, Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function editPassword(UserPasswordEncoderInterface $passwordEncoder, Request $request, EntityManagerInterface $entityManager): Response
     {
-//        $user = $this->getUser();
         $passwordEdit = new PasswordEdit();
-
+        $user = $this->getUser();
         $form = $this->createForm(PasswordEditType::class, $passwordEdit);
         $form->handleRequest($request);
 

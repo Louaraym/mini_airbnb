@@ -4,7 +4,10 @@
 {% block body %}
     <div class="container">
         <h2 class="text-center mt-5 mb-5">
-            Nos annonces<a href="{{ path('advert_new') }}" class="btn btn-secondary float-right">Ajouter une annonce »</a>
+            Nos annonces
+            {% if is_granted('ROLE_USER') %}
+            <a href="{{ path('advert_new') }}" class="btn btn-secondary float-right">Ajouter une annonce »</a>
+            {% endif %}
         </h2>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
             {% for advert in adverts %}
