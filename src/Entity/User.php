@@ -5,12 +5,18 @@ namespace App\Entity;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(
+ *     fields={"email"},
+ *     message="Il existe déjà un compte avec cette adresse email, veuillez choisir une autre !"
+ * )
  */
 class User implements UserInterface
 {
@@ -31,6 +37,11 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @Assert\EqualTo(propertyPath="password", message="Vos mots de passe doivent être identiques ")
+     */
+    public $confirm_password;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -268,5 +279,10 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    public function getFullName(): string
+    {
+        return "{$this->firstName} {$this->lastName}";
     }
 }

@@ -29,7 +29,7 @@ class AdvertController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="advert_new", methods={"GET","POST"})
+     * @Route("/add/new", name="advert_new", methods={"GET","POST"})
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return Response
@@ -42,6 +42,7 @@ class AdvertController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var Advert $advert */
             $advert = $form->getData();
+
             $images = $advert->getImages();
 
             if ($images){
@@ -49,6 +50,8 @@ class AdvertController extends AbstractController
                     $image->setAdvert($advert);
                 }
             }
+
+            $advert->setAuthor($this->getUser());
 
             $entityManager->persist($advert);
             $entityManager->flush();
@@ -66,7 +69,7 @@ class AdvertController extends AbstractController
     }
 
     /**
-     * @Route("/{slug}-{id}", name="advert_show", methods={"GET"}, requirements={"slug": "[a-z0-9\-]*"})
+     * @Route("/show/{slug}-{id}", name="advert_show", methods={"GET"}, requirements={"slug": "[a-z0-9\-]*"})
      * @param Advert $advert
      * @param String $slug
      * @return Response
@@ -86,7 +89,7 @@ class AdvertController extends AbstractController
     }
 
     /**
-     * @Route("/{slug}-{id}/edit", name="advert_edit", methods={"GET","POST"}, requirements={"slug": "[a-z0-9\-]*"})
+     * @Route("/edit/{slug}-{id}", name="advert_edit", methods={"GET","POST"}, requirements={"slug": "[a-z0-9\-]*"})
      * @param Request $request
      * @param Advert $advert
      * @param String $slug

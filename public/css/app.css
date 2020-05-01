@@ -14,3 +14,12 @@ div.carousel-caption{
 a{
     text-decoration: none !important;
 }
+.avatar-medium{
+    max-width: 64px;
+    max-height: 64px;
+}
+
+.avatar-small{
+    max-width: 24px;
+    max-height: 24px;
+}

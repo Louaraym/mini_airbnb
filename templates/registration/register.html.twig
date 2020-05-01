@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Inscription Sur Mini airbnb</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-secondary mb-3">S'inscrire</button>
+    {{ form_end(form) }}
+</div>
+{% endblock %}
