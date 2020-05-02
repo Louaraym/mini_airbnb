@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page non trouvée{% endblock %}
+
+{% block body %}
+    <div class="container text-center py-5" style="margin-bottom: 350px">
+        <h1 class="h3 font-weight-bold mb-4" style="color: red">Oups ! Page non trouvée !</h1>
+        <p>
+            La page demandée n'a malheureusement pas pu être localisée. <br>
+            Le lien que vous avez suivi peut être incorrect ou la page peut avoir été supprimée.<br>
+            Vous pouvez continuer votre navigation en allant voir toutes nos annonces disponibles. <br>
+            <a class="btn btn-lg btn-secondary mt-4" href="{{ path('advert_index') }}" role="button">
+                Voir nos annonces »
+            </a>
+        </p>
+    </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page d'erreu générique{% endblock %}
+
+{% block body %}
+    <div class="container text-center py-5" style="margin-bottom: 280px">
+        <h1 class="h3 font-weight-bold" style="color: red">Oops! Une erreur est survenue !</h1>
+        <h2 class="h4 font-weight-normal">Le serveur a renvoyé : <br>"{{ status_code }} {{ status_text }}".</h2>
+        <p>
+            Quelque chose est cassé. S'il vous plaît laissez-nous savoir ce que vous faisiez lorsque cette erreur s'est produite. <br>
+            Nous allons le réparer dès que possible. Désolé pour tout inconvénient causé.
+        </p>
+        <p>
+            Vous pouvez continuer votre navigation en allant voir toutes nos annonces disponibles. <br>
+            <a class="btn btn-lg btn-secondary mt-4" href="{{ path('advert_index') }}" role="button">
+                Voir nos annonces »
+            </a>
+        </p>
+    </div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page non trouvée{% endblock %}
+
+{% block body %}
+    <div class="container text-center py-5" style="margin-bottom: 400px">
+        <h1 class="h3 font-weight-bold" style="color: red">Accès non autorisé !</h1>
+        <p>
+           Vous n'êtes pas autorisé à consulter la page démandée car vous ne disposez pas des droits d'accès necessaires. <br>
+            Vous pouvez continuer votre navigation en allant voir toutes nos annonces disponibles. <br>
+            <a class="btn btn-lg btn-secondary mt-4" href="{{ path('advert_index') }}" role="button">
+                Voir nos annonces »
+            </a>
+        </p>
+    </div>
+{% endblock %}
