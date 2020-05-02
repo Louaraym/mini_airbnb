@@ -7,7 +7,7 @@
             <h1 class="text-center">{{ advert.title }}</h1>
             <p>{{ advert.introduction }}</p>
             <p class="h2">
-                <strong>{{ advert.rooms }} chambres pour {{ advert.price }} € / nuit</strong>
+                <strong>{{ advert.rooms }} {% if advert.rooms > 1 %} chambres {% else %} chambre {% endif %} pour {{ advert.price }} € / nuit</strong>
             </p>
             <a href="#" class="btn btn-secondary mt-3 mb-3">Reserver</a>
         </div>
@@ -15,7 +15,7 @@
     <div class="container text-center mt-5">
       <div class="row">
           <div class="col-md-8 mb-3">
-              {{ advert.content |raw}}
+              {{ advert.content | raw}}
               <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                   <ol class="carousel-indicators">
                       {% for image in advert.images %}
@@ -49,20 +49,30 @@
               <hr>
           </div>
           <div class="col">
-              <div class="row">
+              {% set advertAuthor = advert.author %}
+              <div class="row mb-3 align-items-center">
                   <div class="col-4">
-                      <img src="http://placehold.it/64x64" alt="Avatar de Raymond">
+                      <a href="{{ path('user_show', {'id': advertAuthor.id, 'slug': advertAuthor.slug}) }}">
+                          {% if advert.author.avatarUrl %}
+                          <img src="{{ advert.author.avatarUrl }}" class="rounded-circle avatar-medium" title="Voir son profile" alt="Avatar de {{ advertAuthor.fullName }} ">
+                          {% else %}
+                              <img class="rounded-circle avatar-medium" src="{{ '/images/avatar_profile.png' }}" style="width: auto; height: auto" title="Voir son profile" alt="avatar de {{ app.user.fullName }}">
+                          {% endif %}
+                      </a>
                   </div>
                   <div class="col">
-                      <h3>Raymond LOUA</h3>
-                      <span class="badge badge-secondary">5 Annonces</span>
+                      <a href="{{ path('user_show', {'id': advertAuthor.id, 'slug': advertAuthor.slug}) }}" title="Voir son profile">
+                          <h3>{{ advertAuthor.fullName}} </h3>
+                      </a>
+                      <a href="{{ path('user_show', {'id': advertAuthor.id, 'slug': advertAuthor.slug}) }}" title="Voir les annonces">
+                          <span class="badge badge-secondary py-3 px-4" style="font-size: 1.2em">
+                          {{ advertAuthor.adverts | length }} {% if  advertAuthor.adverts | length > 1 %} annonces {% else %} annonce {% endif %}
+                          </span>
+                      </a>
                   </div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At dicta distinctio dolore esse inventore
-                      iusto perferendis quaerat repellat repellendus sequi!</p>
-                  <p>Aperiam cupiditate deleniti distinctio eius eligendi fugiat itaque iusto labore minima nemo
-                      nesciunt, pariatur quas quasi sed sequi soluta totam.</p>
-                  <p>Ea iure iusto omnis, sapiente temporibus voluptatem. Ad alias corporis dolor esse facere harum
-                      iusto nemo repellendus temporibus voluptate! Deleniti.</p>
+                 <div>
+                     {{ advertAuthor.introduction | raw }}
+                 </div>
               </div>
           </div>
       </div>
@@ -70,12 +80,16 @@
          <div class="col">
             <a href="{{ path('advert_index') }}" class="btn btn-secondary mt-3 mb-3">Retour aux annonces</a>
          </div>
-         <div class="col">
-            <a href="{{ path('advert_edit', {'slug': advert.slug, 'id': advert.id}) }}" class="btn btn-secondary mt-3 mb-3">Modifier l'annonce »</a>
-         </div>
-         <div class="col mt-3">
-            {{ include('advert/_delete_form.html.twig') }}
-         </div>
+          {% if app.user and app.user == advert.author %}
+             <div class="col">
+                <a href="{{ path('advert_edit', {'slug': advert.slug, 'id': advert.id}) }}" class="btn btn-secondary mt-3 mb-3">
+                    Modifier l'annonce »
+                </a>
+             </div>
+             <div class="col mt-3">
+                {{ include('advert/_delete_form.html.twig') }}
+             </div>
+          {% endif %}
       </div>
     </div>
 {% endblock %}

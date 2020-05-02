@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark container-fluid sticky-top" style="margin-bottom: 10px;">
-    <a class="navbar-brand" href="{{ path('home') }}">Mini airbnb</a>
+    <a class="navbar-brand ml-5" href="{{ path('home') }}">Mini airbnb</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -13,13 +13,36 @@
                 <a class="nav-link" href="{{ path('advert_index') }}">Annonces</a>
             </li>
         </ul>
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link"  href="#">Inscription</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Connexion</a>
-            </li>
+        <ul class="navbar-nav ml-auto mr-5">
+            {% if is_granted('ROLE_USER') %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Ouvrir le menu">
+                        {% if app.user.avatarUrl %}
+                            <img class="nav-profile-img rounded-circle avatar-small" src="{{ app.user.avatarUrl }}" title="Ouvrir le menu" alt="avatar de {{ app.user.fullName }}" style="width: auto; height: auto">
+                        {% else %}
+                            <img class="nav-profile-img rounded-circle avatar-small" src="{{ '/images/avatar_profile.png' }}" style="width: auto; height: auto" title="Ouvrir le menu" alt="avatar de {{ app.user.fullName }}">
+                        {% endif %} {{ app.user.fullName }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{{ path('account') }}">Mon compte</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ path('advert_new') }}">Ajouter une annonce</a>
+                        <a class="dropdown-item" href="{{ path('account_profile_edit') }}">Modifier mon profil</a>
+                        <a class="dropdown-item" href="{{ path('account_password_edit') }}">Modifier mon password</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ path('app_logout') }}" onclick="return confirm(
+                             'Vous êtes sur le point de vous déconnecter.\n'+
+                             'Êtes-vous sûr de vouloir continuer ?')">Déconnexion</a>
+                    </div>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link"  href="{{ path('app_register') }}">Inscription</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_login') }}">Mon Compte</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 </nav>

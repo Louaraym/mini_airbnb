@@ -4,32 +4,18 @@
 {% block body %}
     <div class="container">
         <h2 class="text-center mt-5 mb-5">
-            Nos annonces<a href="{{ path('advert_new') }}" class="btn btn-secondary float-right">Ajouter une annonce »</a>
+            Nos annonces
+            {% if is_granted('ROLE_USER') %}
+            <a href="{{ path('advert_new') }}" class="btn btn-secondary float-right">Ajouter une annonce »</a>
+            {% endif %}
         </h2>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
             {% for advert in adverts %}
-                {% set advert_show_url = path('advert_show', {'slug': advert.slug,'id': advert.id}) %}
-                <div class="col mb-4">
-                    <div class="card h-100">
-                        <div class="card-header text-center">
-                            {{ advert.rooms }} chambres, <strong>{{ advert.price }} € / nuit</strong> <br>
-                            <small>Pas encore notée</small>
-                        </div>
-                        <a href="{{ advert_show_url }}">
-                            <img src="{{ advert.coverImage }}" class="card-img-top" alt="...">
-                        </a>
-                        <div class="card-body">
-                            <a href="{{ advert_show_url }}">
-                                <h5 class="card-title">{{ advert.title }}</h5>
-                            </a>
-                            <p class="card-text">{{ advert.introduction }}</p>
-                            <a href="{{ advert_show_url }}" class="btn btn-secondary">Voir l'annonce »</a>
-                            <a href="{{ path('advert_edit', {'slug': advert.slug, 'id': advert.id}) }}" class="btn btn-secondary">Editer l'annonce »</a>
-                        </div>
-                    </div>
-                </div>
+                {% include('advert/_advert.html.twig') %}
             {% else %}
-                <h2 class="text-center mt-5 mb-5">Aucune annonce retrouvée</h2>
+                <div class="alert alert-warning text-center mt-5 mb-5">
+                    <h2>Aucune annonce retrouvée</h2>
+                </div>
             {% endfor %}
         </div>
     </div>

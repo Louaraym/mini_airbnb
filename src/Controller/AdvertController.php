@@ -6,6 +6,8 @@ use App\Entity\Advert;
 use App\Form\AdvertType;
 use App\Repository\AdvertRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +31,8 @@ class AdvertController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="advert_new", methods={"GET","POST"})
+     * @Route("/add/new", name="advert_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return Response
@@ -42,6 +45,7 @@ class AdvertController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var Advert $advert */
             $advert = $form->getData();
+
             $images = $advert->getImages();
 
             if ($images){
@@ -49,6 +53,8 @@ class AdvertController extends AbstractController
                     $image->setAdvert($advert);
                 }
             }
+
+            $advert->setAuthor($this->getUser());
 
             $entityManager->persist($advert);
             $entityManager->flush();
@@ -66,7 +72,7 @@ class AdvertController extends AbstractController
     }
 
     /**
-     * @Route("/{slug}-{id}", name="advert_show", methods={"GET"}, requirements={"slug": "[a-z0-9\-]*"})
+     * @Route("/show/{slug}-{id}", name="advert_show", methods={"GET"}, requirements={"slug": "[a-z0-9\-]*"})
      * @param Advert $advert
      * @param String $slug
      * @return Response
@@ -86,7 +92,11 @@ class AdvertController extends AbstractController
     }
 
     /**
-     * @Route("/{slug}-{id}/edit", name="advert_edit", methods={"GET","POST"}, requirements={"slug": "[a-z0-9\-]*"})
+     * @Route("/edit/{slug}-{id}", name="advert_edit", methods={"GET","POST"}, requirements={"slug": "[a-z0-9\-]*"})
+     * @Security(
+     *     "is_granted('ROLE_USER') and user === advert.getAuthor()",
+     *     message="Cette annonce ne vous appartient . Vous n'avez pas le droit de la modifier !"
+     *     )
      * @param Request $request
      * @param Advert $advert
      * @param String $slug
@@ -133,6 +143,10 @@ class AdvertController extends AbstractController
 
     /**
      * @Route("/{id}", name="advert_delete", methods={"DELETE"})
+     * @Security(
+     *     "is_granted('ROLE_USER') and user === advert.getAuthor() or is_granted('ROLE_ADMIN')",
+     *     message="Cette annonce ne vous appartient . Vous n'avez pas le droit de la supprimer !"
+     *     )
      * @param Request $request
      * @param Advert $advert
      * @param EntityManagerInterface $entityManager
