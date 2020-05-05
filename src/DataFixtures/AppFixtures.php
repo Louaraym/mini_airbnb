@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Advert;
+use App\Entity\Booking;
 use App\Entity\Image;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -35,6 +36,7 @@ class AppFixtures extends Fixture
         $users = [];
         $genres = ['male', 'female'];
 
+        // Manager Users
         for ($i=0; $i<20; $i++){
 
             $user = new User();
@@ -52,10 +54,12 @@ class AppFixtures extends Fixture
                  ->setPassword($this->encoder->encodePassword($user, $user->getLastName()))
                  ->setAvatarUrl($avatarUrl)
             ;
+
             $this->entityManager->persist($user);
             $users[] = $user;
         }
 
+        // Manage a user with a ROLE_ADMIN
         $admin = new User();
         $description = '<p>' . implode('</p><p>', $this->faker->paragraphs(3)) . '</p>';
 
@@ -68,6 +72,7 @@ class AppFixtures extends Fixture
               ->setRoles([User::ROLE_ADMIN]);
         $this->entityManager->persist($admin);
 
+        // Manage Adverts
         for ($i=0; $i<42; $i++){
             $advert = new Advert();
             $content = '<p>' . implode('</p><p>', $this->faker->paragraphs(5)) . '</p>';
@@ -92,6 +97,34 @@ class AppFixtures extends Fixture
                     ->setAdvert($advert);
 
                 $this->entityManager->persist($image);
+            }
+
+            // Manage Bookings
+            for ($k=0, $kMax = mt_rand(0, 10); $k<= $kMax; $k++){
+                $booking = new Booking();
+
+                $createdAt = $this->faker->dateTimeBetween('-6 months');
+                $startDate =  $this->faker->dateTimeBetween('-3 months');
+
+                $duration = mt_rand(5,15);
+                $endDate = (clone $startDate)->modify("+$duration days");
+
+                $amount = $advert->getPrice()*$duration;
+
+                $guest = $users[mt_rand(0, count($users)-1)];
+
+                $comment = '<p>' . implode('</p><p>', $this->faker->paragraphs(2)) . '</p>';
+
+                $booking->setCreatedAt($createdAt)
+                        ->setStartDate($startDate)
+                        ->setEndDate($endDate)
+                        ->setAmount($amount)
+                        ->setGuest($guest)
+                        ->setAdvert($advert)
+                        ->setComment($content)
+                ;
+
+                $this->entityManager->persist($booking);
             }
 
             $this->entityManager->persist($advert);

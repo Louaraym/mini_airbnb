@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réservation N°{{ booking.id }} {% endblock %}
+
+{% set advertAuthor = booking.advert.author %}
+{% set advert_show_url = path('advert_show', {'slug': booking.advert.slug,'id': booking.advert.id}) %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">Votre réservation (N°{{ booking.id }})</h1>
+
+        {% if app.request.query.get('successAlert') %}
+            <div class="alert alert-success">
+                <h4 class="alert-heading">Bravo !</h4>
+                <p>
+                    Votre réservation au près de
+                    <strong>
+                        <a href="{{ path('user_show', {'id': advertAuthor.id, 'slug': advertAuthor.slug}) }}">
+                            {{ advertAuthor.fullName }}
+                        </a>
+                    </strong> pour l'annonce
+                    <strong>
+                        <a href="{{ advert_show_url }}">
+                            {{ booking.advert.title }}
+                        </a>
+                    </strong> a bien été prise en compte !
+                </p>
+            </div>
+        {% endif %}
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-light">
+                    <h2>Détails</h2>
+                    <hr>
+                    <dl class="row">
+                        <dt class="col-md-4">Numéro</dt>
+                        <dd class="col-md-8">{{ booking.id }}</dd>
+                        <dt class="col-md-4">Date d'arrivée</dt>
+                        <dd class="col-md-8">{{ booking.startDate | date('d-m-Y')}}</dd>
+                        <dt class="col-md-4">Date de départ</dt>
+                        <dd class="col-md-8">{{ booking.endDate | date('d-m-Y')}}</dd>
+                        <dt class="col-md-4">Nombre de nuits</dt>
+                        <dd class="col-md-8">{{ booking.getStayDuration }}</dd>
+                        <dt class="col-md-4">Montant total</dt>
+                        <dd class="col-md-8">{{ booking.amount }} &euro;</dd>
+                        <dt class="col-md-4">Démande</dt>
+                        <dd class="col-md-8">{{ booking.comment }}</dd>
+                    </dl>
+                    <h2 class="alert-heading">Votre hôte</h2>
+                    <hr>
+                    <div class="row mb-2">
+                        <div class="col-3">
+                            <img
+                                class="rounded-circle avatar-medium"
+                                src="{{ advertAuthor.avatarUrl }}"
+                                alt="{{ advertAuthor.fullName }}"
+                            >
+                        </div>
+                        <div class="col-9">
+                            <h4>
+                                <a href="{{ path('user_show', {'id': advertAuthor.id, 'slug': advertAuthor.slug}) }}">
+                                    {{ advertAuthor.fullName }}
+                                </a>
+                            </h4>
+                            <a href="{{ path('user_show', {'id': advertAuthor.id, 'slug': advertAuthor.slug}) }}" title="Voir les annonces">
+                          <span class="badge badge-secondary py-2 px-3" style="font-size: 1.2em">
+                          {{ advertAuthor.adverts | length }} {% if  advertAuthor.adverts | length > 1 %} annonces {% else %} annonce {% endif %}
+                          </span>
+                            </a>
+                        </div>
+                    </div>
+                    {{ advertAuthor.introduction }}
+                    <h4 class="mt-2">
+                        <a
+                                href="{{ path('user_show', {'id': advertAuthor.id, 'slug': advertAuthor.slug}) }}"
+                                class="btn btn-secondary" title="Voir son profile"
+                        >
+                            Plus d'infos sur {{ advertAuthor.fullName}}
+                        </a>
+                    </h4>
+                </div>
+            </div>
+            <div class="col">
+                <div class="alert alert-light">
+                    <h2 class="alert-heading">Votre hébergement</h2>
+                    <hr>
+                    <h4>
+                        <a href="{{ advert_show_url }}">
+                            {{ booking.advert.title }}
+                        </a>
+                    </h4>
+                    <h4>
+                        <a href="{{ advert_show_url }}">
+                            <img src="{{ booking.advert.coverImage }}" style="width: 100%; height: auto" class="img-fluid" alt="...">
+                        </a>
+                    </h4>
+                    {{ booking.advert.introduction }}
+                    <h4>
+                        <a href="{{ advert_show_url }}" class="btn btn-secondary mt-2">
+                            Plus d'informations
+                        </a>
+                    </h4>
+                </div>
+            </div>
+        </div>
+
+        <a href="{{ path('booking_index') }}" class="btn btn-secondary">back to list</a>
+
+        <a href="{{ path('booking_edit', {'id': booking.id}) }}" class="btn btn-secondary">Modifier votre réservation</a>
+
+        {{ include('booking/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

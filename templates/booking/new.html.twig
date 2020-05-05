@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
+          integrity="sha256-siyOpF/pBWUPgIcQi17TLBkjvNgNQArcmwJB8YvkAgg=" crossorigin="anonymous" />
+{% endblock %}
+
+{% block title %}Réservation de l'annonce : {{ advert.title }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 style="font-size: 1.3em; font-weight: bold">
+            Réservation de l'annonce : {{ advert.title }}
+        </h1>
+        <hr>
+        <p class="text-center">
+            Vous êtes sur le point de réserver l'annonce de <strong>{{ advert.author.fullName }}</strong>.<br>
+            Dites nous tout, On s'occuoe du reste !
+        </p>
+        {{ include('booking/_form.html.twig') }}
+
+        <a href="{{ path('booking_index') }}" class="btn btn-secondary">back to list</a>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"
+            integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous">
+    </script>
+    <script>
+        let bookingStartAndEndDate = $('#booking_startDate, #booking_endDate');
+        $(function () {
+            bookingStartAndEndDate.datepicker({
+                format: 'dd/mm/yyyy',
+                datesDisabled: [
+                    {% for day in advert.getUnavailableDays %}
+                    "{{ day.format('d/m/Y') }}",
+                    {% endfor %}
+                ],
+                startDate: new Date(),
+            });
+
+            bookingStartAndEndDate.on('change', calculateAmount)
+        })
+
+        function calculateAmount() {
+            //   (\d+)\/(\d+)\/(\d{4})
+            const startDate = new Date($('#booking_startDate').val().replace(/(\d+)\/(\d+)\/(\d{4})/, '$3-$2-$1'));
+            const endDate = new Date($('#booking_endDate').val().replace(/(\d+)\/(\d+)\/(\d{4})/, '$3-$2-$1'));
+
+            if (startDate && endDate && startDate < endDate){
+                const DAY_TIME = 24 * 60 * 60 *1000;
+                //Get Timestamp in millisecond
+                const interval = endDate.getTime() - startDate.getTime();
+                //Get booking days
+                const days = interval/DAY_TIME;
+                //Get total amount
+                const amount = days * {{ advert.price }};
+
+                $('#days').text(days);
+                $('#amount').text(amount.toLocaleString());
+            }
+        }
+
+    </script>
+{% endblock %}

@@ -9,7 +9,7 @@
             <p class="h2">
                 <strong>{{ advert.rooms }} {% if advert.rooms > 1 %} chambres {% else %} chambre {% endif %} pour {{ advert.price }} € / nuit</strong>
             </p>
-            <a href="#" class="btn btn-secondary mt-3 mb-3">Reserver</a>
+            <a href="{{ path('booking_new', {'slug': advert.slug}) }}" class="btn btn-secondary mt-3 mb-3">Reserver</a>
         </div>
     </div>
     <div class="container text-center mt-5">
@@ -65,7 +65,7 @@
                           <h3>{{ advertAuthor.fullName}} </h3>
                       </a>
                       <a href="{{ path('user_show', {'id': advertAuthor.id, 'slug': advertAuthor.slug}) }}" title="Voir les annonces">
-                          <span class="badge badge-secondary py-3 px-4" style="font-size: 1.2em">
+                          <span class="badge badge-secondary py-2 px-3" style="font-size: 1.2em">
                           {{ advertAuthor.adverts | length }} {% if  advertAuthor.adverts | length > 1 %} annonces {% else %} annonce {% endif %}
                           </span>
                       </a>

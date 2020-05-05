@@ -88,9 +88,15 @@ class User implements UserInterface
      */
     private $adverts;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Booking", mappedBy="guest")
+     */
+    private $bookings;
+
     public function __construct()
     {
         $this->adverts = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
     }
 
     /**
@@ -289,5 +295,41 @@ class User implements UserInterface
     public function getFullName(): string
     {
         return "{$this->firstName} {$this->lastName}";
+    }
+
+    /**
+     * @return Collection|Booking[]
+     */
+    public function getBookings(): Collection
+    {
+        return $this->bookings;
+    }
+
+    public function addBooking(Booking $booking): self
+    {
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings[] = $booking;
+            $booking->setGuest($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBooking(Booking $booking): self
+    {
+        if ($this->bookings->contains($booking)) {
+            $this->bookings->removeElement($booking);
+            // set the owning side to null (unless already changed)
+            if ($booking->getGuest() === $this) {
+                $booking->setGuest(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return (string) $this->firstName.' '.$this->lastName;
     }
 }
