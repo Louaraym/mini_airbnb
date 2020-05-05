@@ -112,6 +112,11 @@ class Advert
         $this->bookings = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return (string) $this->title.' '.$this->slug.' '.$this->introduction.' '.$this->content.' '.$this->coverImage;
+    }
+
     /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
@@ -122,6 +127,31 @@ class Advert
             $slugify = new Slugify();
             $this->slug = $slugify->slugify($this->title);
         }
+    }
+
+    /**
+     * @return array DateTime object array of unavailable days
+     */
+    public function getUnavailableDays(): array
+    {
+        $unavailableDays = [];
+
+        foreach ($this->bookings as $booking) {
+            // Get booking days in Timestamp[]
+            $result = range(
+                $booking->getStartDate()->getTimestamp(),
+                $booking->getEndDate()->getTimestamp(),
+                24*60*60
+            );
+            // Transform booking days in DateTime[]
+            $days = array_map(static function ($dayTimestamp){
+                return new \DateTime(date('Y-m-d', $dayTimestamp));
+            }, $result);
+
+            $unavailableDays = array_merge($unavailableDays, $days);
+        }
+
+        return $unavailableDays;
     }
 
     public function getId(): ?int
