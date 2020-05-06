@@ -42,9 +42,9 @@
                         <dt class="col-md-4">Nombre de nuits</dt>
                         <dd class="col-md-8">{{ booking.getStayDuration }}</dd>
                         <dt class="col-md-4">Montant total</dt>
-                        <dd class="col-md-8">{{ booking.amount }} &euro;</dd>
+                        <dd class="col-md-8">{{ booking.amount| number_format(2, ',', ' ') }} &euro;</dd>
                         <dt class="col-md-4">Démande</dt>
-                        <dd class="col-md-8">{{ booking.comment }}</dd>
+                        <dd class="col-md-8">{{ booking.comment | default ('Aucun commentaire') }}</dd>
                     </dl>
                     <h2 class="alert-heading">Votre hôte</h2>
                     <hr>
@@ -79,6 +79,28 @@
                         </a>
                     </h4>
                 </div>
+                <div class="alert alert-light" id="comment">
+                    <h2 class="alert-heading">Votre avis compte !</h2>
+                    {% if date() > date(booking.endDate) %}
+                        {% set comment = booking.advert.commentFromAuthor(app.user) %}
+                        {% if comment is not null %}
+                           <blockquote>
+                               {{ comment.content }} <br>
+                               <strong>Note :</strong> {% include'partials/rating.html.twig' with {'rating': comment.rating} %}
+                           </blockquote>
+                        {% else %}
+                            {{ form_start(form) }}
+                                {{ form_row(form.rating, {'label' : "Note",
+                                    'attr' : { 'placeholder' : "Veuillez saisir votre note de 0 à 5", 'min': 0, 'max': 5, 'step': 1} }) }}
+                                {{ form_row(form.content, {'label' : "Commentaire",
+                                    'attr' : { 'placeholder' : "Votre avis sur votre séjour chez nous..."} }) }}
+                                <button type="submit" class="btn btn-secondary">Commenter</button>
+                            {{ form_end(form) }}
+                        {% endif %}
+                    {% else %}
+                    <p>Vous ne pourrez pas noter cette annonce tant que votre voyage ne sera pas complet !</p>
+                    {% endif %}
+                </div>
             </div>
             <div class="col">
                 <div class="alert alert-light">
@@ -103,8 +125,6 @@
                 </div>
             </div>
         </div>
-
-        <a href="{{ path('booking_index') }}" class="btn btn-secondary">back to list</a>
 
         <a href="{{ path('booking_edit', {'id': booking.id}) }}" class="btn btn-secondary">Modifier votre réservation</a>
 

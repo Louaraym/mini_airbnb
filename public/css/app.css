@@ -1,7 +1,12 @@
 div.annonce-title{
-    padding: 1em;
+    padding: 2em;
     background-size: cover;
     background-position: center center;
+}
+div.annonce-title .btn{
+    margin-top: 2em;
+   font-size: 1.5em;
+  line-height: 1.5em;
 }
 div.annonce-title h1, div.annonce-title p {
     color: white;
@@ -27,4 +32,8 @@ a{
 .datepicker table tr td.disabled, .datepicker table tr td.disabled:hover {
     color: firebrick !important;
     background: gray !important;
+}
+
+span.rating i{
+    color: goldenrod;
 }
