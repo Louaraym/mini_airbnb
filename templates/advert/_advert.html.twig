@@ -3,14 +3,18 @@
     <div class="card h-100">
         <div class="card-header text-center">
             {{ advert.rooms }} {% if advert.rooms > 1 %} chambres {% else %} chambre {% endif %},
-            <strong>{{ advert.price }} € / nuit</strong> <br>
+            <strong>{{ advert.price | number_format(2, ',', ' ')}} € / nuit</strong> <br>
+            {% if advert.comments|length>0 %}
+                {% include'partials/rating.html.twig' with {'rating': advert.getAverageRating} %}
+            {% else %}
             <small>Pas encore notée</small>
+            {% endif %}
         </div>
         <a href="{{ advert_show_url }}">
             <img src="{{ advert.coverImage }}" class="card-img-top" alt="...">
         </a>
         <div class="card-body">
-            <a href="{{ advert_show_url }}">
+            <a href="{{ advert_show_url }}" style="color: #6c757d">
                 <h5 class="card-title">{{ advert.title }}</h5>
             </a>
             <p class="card-text">{{ advert.introduction }}</p>

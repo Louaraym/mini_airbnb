@@ -7,7 +7,7 @@
             <h1 class="text-center">{{ advert.title }}</h1>
             <p>{{ advert.introduction }}</p>
             <p class="h2">
-                <strong>{{ advert.rooms }} {% if advert.rooms > 1 %} chambres {% else %} chambre {% endif %} pour {{ advert.price }} € / nuit</strong>
+                <strong>{{ advert.rooms }} {% if advert.rooms > 1 %} chambres {% else %} chambre {% endif %} pour {{ advert.price| number_format(2, ',', ' ') }} € / nuit</strong>
             </p>
             <a href="{{ path('booking_new', {'slug': advert.slug}) }}" class="btn btn-secondary mt-3 mb-3">Reserver</a>
         </div>
@@ -47,6 +47,35 @@
                   </a>
               </div>
               <hr>
+              {% if advert.comments | length > 0 %}
+                  <h2 class="mb-3">Commentaires de nos voyageurs :</h2>
+                  <div class="alert alert-info">
+                      <h4 class="alert-heading text-center">
+                          <div class="row align-items-center">
+                              <div class="col">
+                                  Note globale des voyageurs
+                              </div>
+                              <div class="col">
+                                  {% include'partials/rating.html.twig' with {'rating': advert.getAverageRating} %}
+                                    <br>
+                                  (<small>Calculée sur {{ advert.comments | length}} avis </small>)
+                              </div>
+                          </div>
+                      </h4>
+                  </div>
+                  {% for comment in advert.comments %}
+                      <div class="bg-light mb-3 rounded py-3 px-3">
+                          <strong>{{ comment.author.firstName }}</strong> a dit :
+                          <blockquote>
+                              {{ comment.content }}
+                          </blockquote>
+                          <strong>Note donnée :</strong>
+                          {% include'partials/rating.html.twig' with {'rating': comment.rating} %}
+                      </div>
+                  {% endfor %}
+              {% else %}
+                  <h2>Cette annonce n'a pas encore reçu de commentaires ...</h2>
+              {% endif %}
           </div>
           <div class="col">
               {% set advertAuthor = advert.author %}
@@ -54,14 +83,14 @@
                   <div class="col-4">
                       <a href="{{ path('user_show', {'id': advertAuthor.id, 'slug': advertAuthor.slug}) }}">
                           {% if advert.author.avatarUrl %}
-                          <img src="{{ advert.author.avatarUrl }}" class="rounded-circle avatar-medium" title="Voir son profile" alt="Avatar de {{ advertAuthor.fullName }} ">
+                          <img src="{{ advert.author.avatarUrl }}" class="rounded-circle avatar-medium" title="Voir son profile" alt="Avatar de {{ advertAuthor.fullName }}">
                           {% else %}
                               <img class="rounded-circle avatar-medium" src="{{ '/images/avatar_profile.png' }}" style="width: auto; height: auto" title="Voir son profile" alt="avatar de {{ app.user.fullName }}">
                           {% endif %}
                       </a>
                   </div>
-                  <div class="col">
-                      <a href="{{ path('user_show', {'id': advertAuthor.id, 'slug': advertAuthor.slug}) }}" title="Voir son profile">
+                  <div class="col mb-4">
+                      <a href="{{ path('user_show', {'id': advertAuthor.id, 'slug': advertAuthor.slug}) }}" title="Voir son profile" style="color: #6c757d">
                           <h3>{{ advertAuthor.fullName}} </h3>
                       </a>
                       <a href="{{ path('user_show', {'id': advertAuthor.id, 'slug': advertAuthor.slug}) }}" title="Voir les annonces">
@@ -70,9 +99,7 @@
                           </span>
                       </a>
                   </div>
-                 <div>
-                     {{ advertAuthor.introduction | raw }}
-                 </div>
+                     {{ advertAuthor.description| raw }}
               </div>
           </div>
       </div>

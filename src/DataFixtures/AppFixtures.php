@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Advert;
 use App\Entity\Booking;
+use App\Entity\Comment;
 use App\Entity\Image;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -125,6 +126,19 @@ class AppFixtures extends Fixture
                 ;
 
                 $this->entityManager->persist($booking);
+
+                //Comments management
+                if (mt_rand(0,1)){
+                    $comment = new Comment();
+
+                    $comment->setAuthor($guest)
+                            ->setAdvert($advert)
+                            ->setContent($this->faker->paragraph())
+                            ->setRating(mt_rand(1,5))
+                    ;
+
+                    $this->entityManager->persist($comment);
+                }
             }
 
             $this->entityManager->persist($advert);
