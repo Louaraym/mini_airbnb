@@ -24,6 +24,10 @@
                         {% endif %} {{ app.user.fullName }}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <a class="dropdown-item" href="{{ path('admin_adverts_index') }}">Dashboard</a>
+                        <div class="dropdown-divider"></div>
+                        {% endif %}
                         <a class="dropdown-item" href="{{ path('account') }}">Mon compte</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ path('account_my_bookings') }}">Mes réservations</a>

@@ -2,9 +2,7 @@
 
 namespace App\Security;
 
-use App\Entity\User;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -21,20 +19,20 @@ use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticato
 use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-class AppUserAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
+class AppAdminAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
     use TargetPathTrait;
 
-    public const LOGIN_ROUTE = 'app_login';
+    public const LOGIN_ROUTE = 'app_admin_login';
 
-    private $userRepository;
     private $urlGenerator;
     private $csrfTokenManager;
     private $passwordEncoder;
+    private $userRepository;
 
     public function __construct(UserRepository $userRepository, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
     {
-        $this->userRepository = $userRepository;
+         $this->userRepository = $userRepository;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
@@ -65,14 +63,16 @@ class AppUserAuthenticator extends AbstractFormLoginAuthenticator implements Pas
     {
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
         if (!$this->csrfTokenManager->isTokenValid($token)) {
-            throw new InvalidCsrfTokenException("'Le jeton CSRF est invalide'");
+            throw new InvalidCsrfTokenException('Le jeton CSRF est invalide');
         }
 
         $user = $this->userRepository->findOneBy(['email' => $credentials['email']]);
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException("L'email n'a pa pu être trouvé");
+            throw new CustomUserMessageAuthenticationException(
+                'Email could not be found.'
+            );
         }
 
         return $user;
@@ -99,7 +99,7 @@ class AppUserAuthenticator extends AbstractFormLoginAuthenticator implements Pas
             return new RedirectResponse($targetPath);
         }
 
-       return new RedirectResponse($this->urlGenerator->generate('account'));
+       return new RedirectResponse($this->urlGenerator->generate('admin_adverts_index'));
         //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 

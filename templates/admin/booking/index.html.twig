@@ -1,0 +1,58 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Booking index{% endblock %}
+
+{% block body %}
+    <div class="container-fluid text-center">
+        <h1>Gestion des réservations</h1>
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date d'arrivée</th>
+                <th>Date de départ</th>
+                <th>Date de réservation</th>
+                <th>Titre de l'annonce</th>
+                <th>Voyageur</th>
+                <th>Montant total</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.id }}</td>
+                    <td>{{ booking.startDate | date('d/m/Y') }}</td>
+                    <td>{{ booking.endDate | date('d/m/Y')}}</td>
+                    <td>{{ booking.createdAt | date('d/m/Y à H:i') }}</td>
+                    <td>{{ booking.advert.title }}</td>
+                    <td>
+                        <img src="{{ booking.guest.avatarUrl }}"
+                             alt="Avatar de {{ booking.guest }}"
+                             class="rounded-circle avatar-small"
+                        >
+                        {{ booking.guest }}
+                    </td>
+                    <td>{{ booking.amount }}</td>
+                    <td>
+                        <a href="{{ path('booking_show', {'id': booking.id}) }}">
+                            <i class="fas fa-eye  mr-2" style="font-size: 1.5em"></i>
+                        </a>
+                        <a href="{{ path('booking_edit', {'id': booking.id}) }}">
+                            <i class="fas fa-edit mr-2" style="font-size: 1.5em"></i>
+                        </a>
+                        <a href="{{ path('booking_delete', {'id': booking.id}) }}" title="supprimer l'annonce">
+                            <i class="fas fa-trash" style="font-size: 1.5em; color: red"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">Aucun commentaire rétrouvée</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -82,6 +82,7 @@ class RegistrationType extends AbstractType
             ])
             ->add('avatarUrl', UrlType::class, [
                 'label' => 'Avatar',
+                'required' => false,
                 'attr' => ['placeholder' => 'Url de votre avatar'],
                 'constraints' => [
                     new Url([

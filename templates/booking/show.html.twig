@@ -113,10 +113,10 @@
                     </h4>
                     <h4>
                         <a href="{{ advert_show_url }}">
-                            <img src="{{ booking.advert.coverImage }}" style="width: 100%; height: auto" class="img-fluid" alt="...">
+                            <img src="{{ booking.advert.coverImage }}"  style="height: min-content; width: 100%;" alt="...">
                         </a>
                     </h4>
-                    {{ booking.advert.introduction }}
+                    {{ booking.advert.content |raw }}
                     <h4>
                         <a href="{{ advert_show_url }}" class="btn btn-secondary mt-2">
                             Plus d'informations
@@ -128,6 +128,8 @@
 
         <a href="{{ path('booking_edit', {'id': booking.id}) }}" class="btn btn-secondary">Modifier votre réservation</a>
 
-        {{ include('booking/_delete_form.html.twig') }}
+        <div class="text-center">
+            {{ include('booking/_delete_form.html.twig') }}
+        </div>
     </div>
 {% endblock %}

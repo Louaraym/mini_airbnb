@@ -114,15 +114,13 @@ class AppFixtures extends Fixture
 
                 $guest = $users[mt_rand(0, count($users)-1)];
 
-                $comment = '<p>' . implode('</p><p>', $this->faker->paragraphs(2)) . '</p>';
-
                 $booking->setCreatedAt($createdAt)
                         ->setStartDate($startDate)
                         ->setEndDate($endDate)
                         ->setAmount($amount)
                         ->setGuest($guest)
                         ->setAdvert($advert)
-                        ->setComment($content)
+                        ->setComment($this->faker->paragraph())
                 ;
 
                 $this->entityManager->persist($booking);

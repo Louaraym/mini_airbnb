@@ -8,14 +8,14 @@
 {% block title %}Modification de la réservation N°{{ booking.id }}{% endblock %}
 
 {% block body %}
-   <div class="container">
+   <div class="container my-4">
        <h1 class="text-center">Modifier la réservation N°{{ booking.id }}</h1>
 
        {{ include('booking/_form.html.twig', {'button_label': 'Modifier la réservation'}) }}
 
-       <a href="{{ path('booking_show', {'id': booking.id}) }}" class="btn btn-secondary">Retour à la réservation</a>
-
-       {{ include('booking/_delete_form.html.twig') }}
+       <div class="text-center">
+           {{ include('booking/_delete_form.html.twig') }}
+       </div>
    </div>
 {% endblock %}
 

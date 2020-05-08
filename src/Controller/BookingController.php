@@ -22,18 +22,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class BookingController extends AbstractController
 {
     /**
-     * @Route("/", name="booking_index", methods={"GET"})
-     * @param BookingRepository $bookingRepository
-     * @return Response
-     */
-    public function index(BookingRepository $bookingRepository): Response
-    {
-        return $this->render('booking/index.html.twig', [
-            'bookings' => $bookingRepository->findAll(),
-        ]);
-    }
-
-    /**
      * @Route("/new/{slug}", name="booking_new", methods={"GET","POST"}, requirements={"slug": "[a-z0-9\-]*"})
      * @param Request $request
      * @param String $slug

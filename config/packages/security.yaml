@@ -10,19 +10,37 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
+
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_MANAGER, ROLE_USER]
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        admin:
+            pattern: ^/admin
+            anonymous: true
+            context: my_context
+            form_login:
+                login_path: app_admin_login
+                check_path: app_admin_login
+                default_target_path: admin_adverts_index
+#            guard:
+#                authenticators:
+#                    - App\Security\AppAdminAuthenticator
+            logout:
+                path: app_admin_logout
+                target: app_admin_login
         main:
             anonymous: lazy
-            provider: app_user_provider
+            context: my_context
             guard:
                 authenticators:
                     - App\Security\AppUserAuthenticator
             logout:
                 path: app_logout
-                # where to redirect after logout
                 target: app_login
             remember_me:
                 secret:   '%kernel.secret%'
@@ -38,9 +56,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
-    role_hierarchy:
-        ROLE_MANAGER: ROLE_USER
-        ROLE_ADMIN: ROLE_MANAGER

@@ -59,7 +59,9 @@ class AdvertController extends AbstractController
             $entityManager->persist($advert);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Votre annonce a été ajoutée avec succès !');
+            $this->addFlash('success',
+                "L'annonce <strong>{$advert->getTitle()}</strong> a été ajoutée avec succès !"
+            );
             return $this->redirectToRoute('advert_show', [
                 'slug' => $advert->getSlug(),
                 'id' => $advert->getId()
@@ -94,7 +96,7 @@ class AdvertController extends AbstractController
     /**
      * @Route("/edit/{slug}-{id}", name="advert_edit", methods={"GET","POST"}, requirements={"slug": "[a-z0-9\-]*"})
      * @Security(
-     *     "is_granted('ROLE_USER') and user === advert.getAuthor()",
+     *     "is_granted('ROLE_USER') and user === advert.getAuthor() or is_granted('ROLE_ADMIN')",
      *     message="Cette annonce ne vous appartient . Vous n'avez pas le droit de la modifier !"
      *     )
      * @param Request $request
@@ -118,6 +120,7 @@ class AdvertController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $advert->setUpdatedAt(new \DateTime());
             $images = $advert->getImages();
 
             if ($images){
@@ -128,7 +131,9 @@ class AdvertController extends AbstractController
 
             $entityManager->flush();
 
-            $this->addFlash('success', 'Votre modification a été effectuée avec succès !');
+            $this->addFlash('success',
+                "L'annonce <strong>{$advert->getTitle()}</strong> a été modifiée avec succès !"
+            );
             return $this->redirectToRoute('advert_show', [
                 'slug' => $advert->getSlug(),
                 'id' => $advert->getId()
@@ -154,12 +159,27 @@ class AdvertController extends AbstractController
      */
     public function delete(Request $request, Advert $advert, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$advert->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($advert);
-            $entityManager->flush();
+        if (count($advert->getBookings()) > 0){
+            $this->addFlash('warning',
+                "Vous ne pouvez pas supprimer l'annonce <strong>{$advert->getTitle()}</strong> 
+                            Car elle possède déjà des réservations !"
+            );
+        }else{
+            if ($this->isCsrfTokenValid('delete'.$advert->getId(), $request->request->get('_token'))) {
+                $entityManager->remove($advert);
+                $entityManager->flush();
+            }
+
+            $this->addFlash('success',
+                "L'annonce <strong>{$advert->getTitle()}</strong> a été supprimée avec succès !"
+            );
+            return $this->redirectToRoute('advert_index');
         }
 
-        $this->addFlash('success', 'Votre annonce a été supprimée avec succès !');
-        return $this->redirectToRoute('advert_index');
+        return $this->redirectToRoute('advert_show', [
+            'slug' => $advert->getSlug(),
+            'id' => $advert->getId()
+        ]);
     }
+
 }

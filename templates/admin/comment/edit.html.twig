@@ -1,0 +1,20 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Modification du commentaire N°{{ comment.id }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-4" style="margin-bottom: 300px">
+        <h1 class="text-center mb-4 h4">Modification du commentaire N°{{ comment.id }}</h1>
+        <div class="alert alert-info">
+           <strong>Annonce liée :</strong> {{ comment.advert.title }} <br>
+            <strong>Auteur :</strong> {{ comment.author }} <br>
+            <strong>Note donnée : {{ comment.rating }}</strong><br>
+            <strong> Date de création :</strong> {{ comment.createdAt | date('d/m/Y à H:i')  }}
+        </div>
+        {{ form_start(form) }}
+        {{ form_row(form.content, {'label' : "Contenu du commentaire",
+            'attr' : { 'placeholder' : "Corrigez le commentaire..."} }) }}
+        <button type="submit" class="btn btn-primary">Soumettre les modifications</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

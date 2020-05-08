@@ -102,7 +102,7 @@ class Advert
     private $author;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Booking", mappedBy="advert")
+     * @ORM\OneToMany(targetEntity="App\Entity\Booking", mappedBy="advert", orphanRemoval=false)
      */
     private $bookings;
 
@@ -111,11 +111,22 @@ class Advert
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->bookings = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     public function __toString()
@@ -383,6 +394,30 @@ class Advert
                 $comment->setAdvert(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
