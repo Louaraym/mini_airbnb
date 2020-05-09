@@ -18,7 +18,7 @@
                 <h5 class="card-title">{{ advert.title }}</h5>
             </a>
             <p class="card-text">{{ advert.introduction }}</p>
-            <a href="{{ advert_show_url }}" class="btn btn-secondary">Voir l'annonce »</a>
+            <a href="{{ advert_show_url }}" class="btn btn-secondary ml-2">Voir l'annonce »</a>
             {% if app.user and app.user == advert.author %}
                 <a href="{{ path('advert_edit', {'slug': advert.slug, 'id': advert.id}) }}" class="btn btn-secondary">
                     Editer l'annonce »

@@ -56,4 +56,24 @@ class CommentAdminController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("admin/comment/delete/{id}", name="admin_comment_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Comment $comment
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
+    public function delete(Request $request, Comment $comment, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($comment);
+            $entityManager->flush();
+            $this->addFlash('success',
+                "Le commentaire de <strong>{$comment->getAuthor()}</strong> a été supprimée avec succès !"
+            );
+        }
+
+        return $this->redirectToRoute('admin_comments_index');
+    }
 }

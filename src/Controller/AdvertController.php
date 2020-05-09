@@ -164,11 +164,9 @@ class AdvertController extends AbstractController
                 "Vous ne pouvez pas supprimer l'annonce <strong>{$advert->getTitle()}</strong> 
                             Car elle possède déjà des réservations !"
             );
-        }else{
-            if ($this->isCsrfTokenValid('delete'.$advert->getId(), $request->request->get('_token'))) {
-                $entityManager->remove($advert);
-                $entityManager->flush();
-            }
+        }else if ($this->isCsrfTokenValid('delete'.$advert->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($advert);
+            $entityManager->flush();
 
             $this->addFlash('success',
                 "L'annonce <strong>{$advert->getTitle()}</strong> a été supprimée avec succès !"

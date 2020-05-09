@@ -2,32 +2,28 @@
 
 namespace App\Form;
 
+use App\Entity\Advert;
 use App\Entity\Booking;
-use App\Form\DataTransformer\FrenchDateToDateTimeTransformer;
+use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BookingType extends AbstractType
+class AdminBookingType extends AbstractType
 {
-    private $transformer;
-
-    public function __construct(FrenchDateToDateTimeTransformer $transformer)
-    {
-        $this->transformer = $transformer;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('startDate', TextType::class, [
+            ->add('startDate',DateType::class, [
+                'widget' => 'single_text',
                 'label' => "Date d'arrivée",
                 'attr' => ['placeholder' => "Selectionnez votre date d'arrivée"],
             ])
-            ->add('endDate', TextType::class, [
+            ->add('endDate',DateType::class, [
+                'widget' => 'single_text',
                 'label' => "Date de départ",
                 'attr' => ['placeholder' => "Selectionnez votre date de départ"],
             ])
@@ -39,10 +35,17 @@ class BookingType extends AbstractType
                     'rows' => 5
                 ],
             ])
+            ->add('guest', EntityType::class, [
+                'class' => User::class,
+                'choice_label' => 'fullName',
+                'label' => "Le voyageur",
+            ])
+            ->add('advert', EntityType::class, [
+                'class' => Advert::class,
+                'choice_label' => 'title',
+                'label' => "Annonce",
+            ])
         ;
-
-        $builder->get('startDate')->addModelTransformer($this->transformer);
-        $builder->get('endDate')->addModelTransformer($this->transformer);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -51,7 +54,6 @@ class BookingType extends AbstractType
             'data_class' => Booking::class,
             'validation_groups' => [
                 "Default",
-                "front_validation"
             ]
         ]);
     }

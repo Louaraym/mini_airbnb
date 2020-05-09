@@ -78,4 +78,29 @@ class AdvertAdminController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("admin/advert/delete/{id}", name="admin_advert_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Advert $advert
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
+    public function delete(Request $request, Advert $advert, EntityManagerInterface $entityManager): Response
+    {
+        if (count($advert->getBookings()) > 0){
+            $this->addFlash('warning',
+                "Vous ne pouvez pas supprimer l'annonce <strong>{$advert->getTitle()}</strong> 
+                            Car elle possède déjà des réservations !"
+            );
+        }else if ($this->isCsrfTokenValid('delete'.$advert->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($advert);
+            $entityManager->flush();
+            $this->addFlash('success',
+                "L'annonce <strong>{$advert->getTitle()}</strong> a été supprimée avec succès !"
+            );
+        }
+
+        return $this->redirectToRoute('admin_adverts_index');
+    }
+
 }

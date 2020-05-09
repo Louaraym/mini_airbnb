@@ -111,6 +111,9 @@ class BookingController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success',
+                "La réservation N°<strong>{$booking->getId()}</strong> a été modifiée avec succès !"
+            );
 
             return $this->redirectToRoute('booking_show', [
                 'id' => $booking->getId(),
@@ -137,8 +140,11 @@ class BookingController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$booking->getId(), $request->request->get('_token'))) {
             $entityManager->remove($booking);
             $entityManager->flush();
+            $this->addFlash('success',
+                "La réservation de <strong>{$booking->getGuest()}</strong> a été supprimée avec succès !"
+            );
         }
 
-        return $this->redirectToRoute('booking_index');
+        return $this->redirectToRoute('advert_index');
     }
 }

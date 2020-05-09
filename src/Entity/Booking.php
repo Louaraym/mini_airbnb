@@ -39,7 +39,8 @@ class Booking
      * )
      * @Assert\GreaterThan(
      *     "today",
-     *     message="La date d'arrivée doit être ultérieure à la date d'aujourd'hui"
+     *     message="La date d'arrivée doit être ultérieure à la date d'aujourd'hui",
+     *     groups={"front_validation"}
      * )
      */
     private $startDate;
@@ -76,7 +77,7 @@ class Booking
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
-    public function prePersist(): void
+    public function calculateBookingTotalAmount(): void
     {
         if (empty($this->amount)){
             $this->amount = $this->advert->getPrice()*$this->getStayDuration();

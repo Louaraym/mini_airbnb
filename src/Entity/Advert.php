@@ -121,6 +121,9 @@ class Advert
      */
     private $updatedAt;
 
+    /**
+     * Advert constructor.
+     */
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -129,6 +132,9 @@ class Advert
         $this->createdAt = new \DateTime();
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return (string) $this->title.' '.$this->slug.' '.$this->introduction.' '.$this->content.' '.$this->coverImage;

@@ -98,11 +98,22 @@ class User implements UserInterface
      */
     private $comments;
 
+    /**
+     * User constructor.
+     */
     public function __construct()
     {
         $this->adverts = new ArrayCollection();
         $this->bookings = new ArrayCollection();
         $this->comments = new ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->firstName.' '.$this->lastName;
     }
 
     /**
@@ -332,11 +343,6 @@ class User implements UserInterface
         }
 
         return $this;
-    }
-
-    public function __toString()
-    {
-        return (string) $this->firstName.' '.$this->lastName;
     }
 
     /**
