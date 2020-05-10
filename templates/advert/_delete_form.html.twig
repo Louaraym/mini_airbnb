@@ -1,9 +1,0 @@
-<form
-    method="post"
-    action="{{ path('advert_delete', {'id': advert.id}) }}"
-    onsubmit="return confirm('Êtes-vous sûr de bien vouloir supprimer cette annonce ?');"
->
-    <input type="hidden" name="_method" value="DELETE">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ advert.id) }}">
-    <button class="btn btn-danger mb-3">Supprimer l'annonce</button>
-</form>

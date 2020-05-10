@@ -28,23 +28,23 @@
             </div>
         {% endif %}
         <div class="row">
-            <div class="col">
+            <div class="col-md-6">
                 <div class="alert alert-light">
                     <h2>Détails</h2>
                     <hr>
                     <dl class="row">
-                        <dt class="col-md-4">Numéro</dt>
-                        <dd class="col-md-8">{{ booking.id }}</dd>
-                        <dt class="col-md-4">Date d'arrivée</dt>
-                        <dd class="col-md-8">{{ booking.startDate | date('d-m-Y')}}</dd>
-                        <dt class="col-md-4">Date de départ</dt>
-                        <dd class="col-md-8">{{ booking.endDate | date('d-m-Y')}}</dd>
-                        <dt class="col-md-4">Nombre de nuits</dt>
-                        <dd class="col-md-8">{{ booking.getStayDuration }}</dd>
-                        <dt class="col-md-4">Montant total</dt>
-                        <dd class="col-md-8">{{ booking.amount| number_format(2, ',', ' ') }} &euro;</dd>
-                        <dt class="col-md-4">Démande</dt>
-                        <dd class="col-md-8">{{ booking.comment | default ('Aucun commentaire') }}</dd>
+                        <dt class="col-sm-4">Numéro</dt>
+                        <dd class="col-sm-8">{{ booking.id }}</dd>
+                        <dt class="col-sm-4">Date d'arrivée</dt>
+                        <dd class="col-sm-8">{{ booking.startDate | date('d-m-Y')}}</dd>
+                        <dt class="col-sm-4">Date de départ</dt>
+                        <dd class="col-sm-8">{{ booking.endDate | date('d-m-Y')}}</dd>
+                        <dt class="col-sm-4">Nombre de nuits</dt>
+                        <dd class="col-sm-8">{{ booking.getStayDuration }}</dd>
+                        <dt class="col-sm-4">Montant total</dt>
+                        <dd class="col-sm-8">{{ booking.amount| number_format(2, ',', ' ') }} &euro;</dd>
+                        <dt class="col-sm-4">Démande</dt>
+                        <dd class="col-sm-8">{{ booking.comment | default ('Aucun commentaire') }}</dd>
                     </dl>
                     <h2 class="alert-heading">Votre hôte</h2>
                     <hr>
@@ -102,7 +102,7 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="col">
+            <div class="col-md-6">
                 <div class="alert alert-light">
                     <h2 class="alert-heading">Votre hébergement</h2>
                     <hr>
@@ -125,11 +125,13 @@
                 </div>
             </div>
         </div>
-
-        <a href="{{ path('booking_edit', {'id': booking.id}) }}" class="btn btn-secondary">Modifier votre réservation</a>
-
-        <div class="text-center">
-            {{ include('booking/_delete_form.html.twig') }}
+        <div class="d-flex mb-2 " style=" flex-wrap: wrap;">
+           <span class="my-2 mr-2">
+                <a href="{{ path('booking_edit', {'id': booking.id}) }}" class="btn btn-secondary">Modifier votre réservation</a>
+           </span>
+        {% include'partials/_delete_form.html.twig' with
+            {'route': 'booking_delete', 'param': {'id': booking.id}, 'id': booking.id, 'button_label': 'Annuler la réservation' }
+        %}
         </div>
     </div>
 {% endblock %}

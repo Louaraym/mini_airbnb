@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container-fluid text-center">
-        <h1>Gestion des réservations ({{ bookings|length }})</h1>
+        <h1>Gestion des réservations </h1>
 
         <table class="table table-hover">
             <thead>
@@ -20,7 +20,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for booking in bookings %}
+            {% for booking in pagination.data %}
                 <tr>
                     <td>{{ booking.id }}</td>
                     <td>{{ booking.startDate | date('d/m/Y') }}</td>
@@ -35,14 +35,16 @@
                         {{ booking.guest }}
                     </td>
                     <td>{{ booking.amount }}</td>
-                    <td>
+                    <td class="d-flex">
                         <a href="{{ path('booking_show', {'id': booking.id}) }}">
                             <i class="fas fa-eye  mr-2" style="font-size: 1.5em"></i>
                         </a>
                         <a href="{{ path('admin_booking_edit', {'id': booking.id}) }}">
-                            <i class="fas fa-edit mr-2" style="font-size: 1.5em"></i>
+                            <i class="fas fa-edit " style="font-size: 1.5em"></i>
                         </a>
-                        {% include('admin/booking/_delete_form.html.twig') %}
+                        {% include'admin/partials/_delete_form.html.twig' with
+                            {'route': 'admin_booking_delete', 'param': {'id': booking.id}, 'id': booking.id }
+                        %}
                     </td>
                 </tr>
             {% else %}
@@ -52,5 +54,6 @@
             {% endfor %}
             </tbody>
         </table>
+        {{ pagination.display }}
     </div>
 {% endblock %}

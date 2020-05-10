@@ -104,19 +104,19 @@
               </div>
           </div>
       </div>
-      <div class="row">
-         <div class="col">
-            <a href="{{ path('advert_index') }}" class="btn btn-secondary mt-3 mb-3">Retour aux annonces</a>
-         </div>
+      <div class="d-flex mb-2 " style=" flex-wrap: wrap;">
+          <span class="my-2">
+              <a href="{{ path('advert_index') }}" class="btn btn-secondary">Retour aux annonces</a>
+          </span>
           {% if app.user and app.user == advert.author %}
-             <div class="col">
-                <a href="{{ path('advert_edit', {'slug': advert.slug, 'id': advert.id}) }}" class="btn btn-secondary mt-3 mb-3">
-                    Modifier l'annonce »
-                </a>
-             </div>
-             <div class="col mt-3">
-                {{ include('advert/_delete_form.html.twig') }}
-             </div>
+             <span class="my-2">
+                  <a href="{{ path('advert_edit', {'slug': advert.slug, 'id': advert.id}) }}" class="btn btn-secondary mx-2">
+                  Modifier l'annonce »
+                 </a>
+             </span>
+              {% include'partials/_delete_form.html.twig' with
+                  {'route': 'advert_delete', 'param': {'id': advert.id}, 'id': advert.id, }
+              %}
           {% endif %}
       </div>
     </div>

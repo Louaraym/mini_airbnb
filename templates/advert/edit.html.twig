@@ -8,11 +8,13 @@
        {{ include('advert/_form.html.twig', {'button_label': "Mettre à jour l'annonce"}) }}
        <div class="row ">
            <div class="col">
-               <a href="{{ path('advert_index') }}" class="btn btn-secondary mb-3">Retour aux annonces</a>
+               <a href="{{ path('advert_index') }}" class="btn btn-secondary">Retour aux annonces</a>
            </div>
            {% if app.user and app.user == advert.author %}
                <div class="col">
-                   {{ include('advert/_delete_form.html.twig') }}
+                   {% include'partials/_delete_form.html.twig' with
+                       {'route': 'advert_delete', 'param': {'id': advert.id}, 'id': advert.id}
+                   %}
                </div>
            {% endif %}
        </div>

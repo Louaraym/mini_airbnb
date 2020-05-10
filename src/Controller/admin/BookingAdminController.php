@@ -4,7 +4,7 @@ namespace App\Controller\admin;
 
 use App\Entity\Booking;
 use App\Form\AdminBookingType;
-use App\Repository\BookingRepository;
+use App\Service\Pagination;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,14 +18,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class BookingAdminController extends AbstractController
 {
     /**
-     * @Route("/admin/bookings", name="admin_bookings_index", methods={"GET"})
-     * @param BookingRepository $bookingRepository
+     * @Route("/admin/bookings/{page}", name="admin_bookings_index", methods={"GET"})
+     * @param Pagination $pagination
+     * @param int $page
      * @return Response
      */
-    public function index(BookingRepository $bookingRepository): Response
+    public function index(Pagination $pagination, $page = 1): Response
     {
+        $pagination->setClassName(Booking::class)
+            ->setLimit(10)
+            ->setCurrentPage($page);
+
         return $this->render('admin/booking/index.html.twig', [
-            'bookings' => $bookingRepository->findAll(),
+            'pagination' => $pagination,
         ]);
     }
 

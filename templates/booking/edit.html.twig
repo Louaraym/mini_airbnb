@@ -14,7 +14,9 @@
        {{ include('booking/_form.html.twig', {'button_label': 'Modifier la réservation'}) }}
 
        <div class="text-center">
-           {{ include('booking/_delete_form.html.twig') }}
+           {% include'partials/_delete_form.html.twig' with
+               {'route': 'booking_delete', 'param': {'id': booking.id}, 'id': booking.id, 'button_label': 'Annuler la réservation' }
+           %}
        </div>
    </div>
 {% endblock %}

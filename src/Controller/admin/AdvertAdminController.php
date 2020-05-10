@@ -4,7 +4,7 @@ namespace App\Controller\admin;
 
 use App\Entity\Advert;
 use App\Form\AdvertType;
-use App\Repository\AdvertRepository;
+use App\Service\Pagination;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,14 +18,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdvertAdminController extends AbstractController
 {
     /**
-     * @Route("/admin/adverts", name="admin_adverts_index")
-     * @param AdvertRepository $advertRepository
+     * @Route("/admin/adverts/{page}", name="admin_adverts_index", requirements={"page"="\d+"})
+     * @param Pagination $pagination
+     * @param int $page
      * @return Response
      */
-    public function index(AdvertRepository $advertRepository): Response
+    public function index(Pagination $pagination, $page = 1): Response
     {
+        $pagination->setClassName(Advert::class)
+                    ->setLimit(10)
+                    ->setCurrentPage($page);
+
         return $this->render('admin/advert/index.html.twig', [
-            'adverts' => $advertRepository->findAll(),
+            'pagination' => $pagination,
         ]);
     }
 
@@ -90,8 +95,7 @@ class AdvertAdminController extends AbstractController
         if (count($advert->getBookings()) > 0){
             $this->addFlash('warning',
                 "Vous ne pouvez pas supprimer l'annonce <strong>{$advert->getTitle()}</strong> 
-                            Car elle possède déjà des réservations !"
-            );
+                            Car elle possède déjà des réservations !");
         }else if ($this->isCsrfTokenValid('delete'.$advert->getId(), $request->request->get('_token'))) {
             $entityManager->remove($advert);
             $entityManager->flush();
