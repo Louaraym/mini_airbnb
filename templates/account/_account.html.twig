@@ -6,9 +6,6 @@
             {% else %}
             <img src="{{ '/images/avatar_profile.png' }}" class="rounded-circle mb-3" alt="Avatar de {{ user.fullName }} "><br>
             {% endif %}
-{#            <span class="badge badge-secondary py-3 px-4" style="font-size: 1.2em">#}
-{#              {{ user.adverts | length }} {% if  user.adverts | length > 1 %} annonces {% else %} annonce {% endif %}#}
-{#            </span>#}
         </div>
         <div class="col-md-8 ">
             <h1>{{ user.fullName }}</h1>

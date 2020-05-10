@@ -26,7 +26,7 @@ security:
             form_login:
                 login_path: app_admin_login
                 check_path: app_admin_login
-                default_target_path: admin_adverts_index
+                default_target_path: admin_dashboard
 #            guard:
 #                authenticators:
 #                    - App\Security\AppAdminAuthenticator

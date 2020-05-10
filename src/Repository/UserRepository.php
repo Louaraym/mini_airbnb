@@ -36,6 +36,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
+    public function findBestUsers($limit = 2){
+        return $this->createQueryBuilder('u')
+            ->join('u.adverts', 'a')
+            ->join('a.comments', 'c')
+            ->select('u as user, AVG(c.rating) as avgRatings, COUNT(c) as sumComments')
+            ->groupBy('u')
+            ->having('sumComments > 3')
+            ->orderBy('avgRatings', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
