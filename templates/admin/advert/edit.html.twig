@@ -91,13 +91,16 @@
                </div>
            </div>
        </div>
-       <div class="mt-3">{{ include('advert/_delete_form.html.twig') }}</div>
+       {% include'admin/partials/_delete_form.html.twig' with
+           {'route': 'admin_advert_delete', 'param': { 'id': advert.id }, 'id': advert.id, }
+       %}
+{#       <div class="mt-3">{{ include('admin/partials/_delete_form.html.twig') }}</div>#}
    </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="/js/advert.js"></script>
+    {{ encore_entry_script_tags('advert') }}
 {% endblock %}
 
 

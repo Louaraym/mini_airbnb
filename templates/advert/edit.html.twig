@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
+
 {% block title %}Mise à jour d'une annonce{% endblock %}
+
 {% form_theme form 'advert/_collection.html.twig' %}
 
 {% block body %}
@@ -23,5 +25,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="/js/advert.js"></script>
+    {{ encore_entry_script_tags('advert') }}
 {% endblock %}

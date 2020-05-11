@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+
 {% block stylesheets %}
     {{parent() }}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
@@ -11,7 +12,7 @@
    <div class="container my-4">
        <h1 class="text-center">Modifier la réservation N°{{ booking.id }}</h1>
 
-       {{ include('booking/_form.html.twig', {'button_label': 'Modifier la réservation'}) }}
+       {{ include('booking/_form.html.twig', {'amount': booking.amount| number_format(2, ',', ' '), 'button_label': 'Modifier la réservation'}) }}
 
        <div class="text-center">
            {% include'partials/_delete_form.html.twig' with
@@ -43,7 +44,6 @@
         })
 
         function calculateAmount() {
-            //   (\d+)\/(\d+)\/(\d{4})
             const startDate = new Date($('#booking_startDate').val().replace(/(\d+)\/(\d+)\/(\d{4})/, '$3-$2-$1'));
             const endDate = new Date($('#booking_endDate').val().replace(/(\d+)\/(\d+)\/(\d{4})/, '$3-$2-$1'));
 
