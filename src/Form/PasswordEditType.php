@@ -14,7 +14,7 @@ class PasswordEditType extends AbstractType
     {
         $builder
             ->add('oldPassword', PasswordType::class, [
-                'label' => 'Ancien Mot de Passe',
+                'label' => 'Ancien Mot de Passe *',
                 'attr' => ['placeholder' => 'Votre mot de Passe actuel'],
                 'constraints' => [
                     new NotBlank([
@@ -23,7 +23,7 @@ class PasswordEditType extends AbstractType
                 ],
             ])
             ->add('newPassword', PasswordType::class, [
-                'label' => 'Nouveau Mot de Passe',
+                'label' => 'Nouveau Mot de Passe *',
                 'attr' => ['placeholder' => 'Votre nouveau mot de Passe'],
                 'constraints' => [
                     new NotBlank([
@@ -32,7 +32,7 @@ class PasswordEditType extends AbstractType
                 ],
             ])
             ->add('confirmPassword', PasswordType::class, [
-                'label' => 'Confirmation du Mot de Passe',
+                'label' => 'Confirmation du Mot de Passe *',
                 'attr' => ['placeholder' => 'Confirmez votre mot de Passe'],
             ])
         ;

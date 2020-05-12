@@ -24,7 +24,7 @@ class RegistrationType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class,[
-                'label' => 'Email',
+                'label' => 'Email *',
                 'attr' => ['placeholder' => 'Votre email'],
                 'constraints' => [
                     new Email([
@@ -33,7 +33,7 @@ class RegistrationType extends AbstractType
                 ],
             ])
             ->add('password', PasswordType::class, [
-                'label' => 'Mot de Passe',
+                'label' => 'Mot de Passe *',
                 'attr' => ['placeholder' => 'Votre mot de Passe'],
                 'constraints' => [
                     new NotBlank([
@@ -47,11 +47,11 @@ class RegistrationType extends AbstractType
                 ],
             ])
             ->add('confirm_password', PasswordType::class, [
-                'label' => 'Confirmation du Mot de Passe',
+                'label' => 'Confirmation du Mot de Passe *',
                 'attr' => ['placeholder' => 'Confirmer votre mot de Passe'],
             ])
             ->add('firstName', TextType::class, [
-                'label' => 'Prénom',
+                'label' => 'Prénom *',
                 'attr' => ['placeholder' => 'Votre Prénom'],
                 'constraints' => [
                     new NotBlank([
@@ -66,7 +66,7 @@ class RegistrationType extends AbstractType
                 ],
             ])
             ->add('lastName', TextType::class, [
-                'label' => 'Nom',
+                'label' => 'Nom *',
                 'attr' => ['placeholder' => 'Votre Nom de famille'],
                 'constraints' => [
                     new NotBlank([
@@ -92,29 +92,13 @@ class RegistrationType extends AbstractType
             ])
             ->add('introduction', TextareaType::class, [
                 'label' => 'Présentation',
+                'required' => false,
                 'attr' => ['placeholder' => 'Votre présentation globale'],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez saisir votre présentation',
-                    ]),
-                    new Length([
-                        'min' => 20,
-                        'minMessage' => 'Votre présentation doit avoir au moins {{ limit }} caratères',
-                    ]),
-                ],
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Présentation détaillée',
+                'required' => false,
                 'attr' => ['placeholder' => 'Votre présentation détaillée'],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez saisir votre présentation détaillée',
-                    ]),
-                    new Length([
-                        'min' => 50,
-                        'minMessage' => 'Votre présentation détaillée doit avoir au moins {{ limit }} caratères',
-                    ]),
-                ],
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,

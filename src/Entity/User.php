@@ -64,12 +64,12 @@ class User implements UserInterface
     private $avatarUrl;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $introduction;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $description;
 
@@ -99,6 +99,11 @@ class User implements UserInterface
     private $comments;
 
     /**
+     * @ORM\Column(type="datetime")
+     */
+    private $registeredAt;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -106,6 +111,7 @@ class User implements UserInterface
         $this->adverts = new ArrayCollection();
         $this->bookings = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->registeredAt = new  \DateTime();
     }
 
     /**
@@ -115,6 +121,7 @@ class User implements UserInterface
     {
         return (string) $this->firstName.' '.$this->lastName;
     }
+
 
     /**
      * @ORM\PrePersist()
@@ -372,6 +379,18 @@ class User implements UserInterface
                 $comment->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRegisteredAt(): ?\DateTimeInterface
+    {
+        return $this->registeredAt;
+    }
+
+    public function setRegisteredAt(\DateTimeInterface $registeredAt): self
+    {
+        $this->registeredAt = $registeredAt;
 
         return $this;
     }

@@ -1,0 +1,25 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Modification du rôle{% endblock %}
+
+{% block body %}
+    <div class="container " style="height: 80vh">
+        <h1 class="text-center">Gestion du rôle utilisateur</h1>
+       <div class="row my-5" >
+           <div class="col-md-3">&nbsp</div>
+           <div class="col-md-6">
+               <div class="alert alert-info">
+                   <strong>Utilisateur : </strong> {{ user.fullName }} <br>
+                   <strong>Date d'inscription :</strong>le {{ user.registeredAt | date('d/m/Y à H:i' ) }} <br>
+                   <strong>Annonces postées sur le site : </strong>  {{ user.adverts |length }}<br>
+                   <strong> Réservations faites sur le site :</strong>  {{ user.bookings |length }} <br>
+                   <strong>Rôles actuel :</strong>   {% for role in user.roles %} {{ role }}  {% endfor %}
+               </div>
+               {{ form_start(form) }}
+               {{ form_widget(form) }}
+               <button class="btn btn-primary mb-3">Soumettre la modification</button>
+               {{ form_end(form) }}
+           </div>
+       </div>
+    </div>
+{% endblock %}

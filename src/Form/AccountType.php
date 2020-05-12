@@ -24,7 +24,7 @@ class AccountType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class,[
-                'label' => 'Email',
+                'label' => 'Email *',
                 'attr' => ['placeholder' => 'Votre email'],
                 'constraints' => [
                     new Email([
@@ -33,7 +33,7 @@ class AccountType extends AbstractType
                 ],
             ])
             ->add('firstName', TextType::class, [
-                'label' => 'Prénom',
+                'label' => 'Prénom *',
                 'attr' => ['placeholder' => 'Votre Prénom'],
                 'constraints' => [
                     new NotBlank([
@@ -48,7 +48,7 @@ class AccountType extends AbstractType
                 ],
             ])
             ->add('lastName', TextType::class, [
-                'label' => 'Nom',
+                'label' => 'Nom *',
                 'attr' => ['placeholder' => 'Votre Nom de famille'],
                 'constraints' => [
                     new NotBlank([
@@ -73,7 +73,7 @@ class AccountType extends AbstractType
                 ],
             ])
             ->add('introduction', TextareaType::class, [
-                'label' => 'Présentation',
+                'label' => 'Présentation *',
                 'attr' => ['placeholder' => 'Votre présentation globale'],
                 'constraints' => [
                     new NotBlank([
@@ -86,7 +86,7 @@ class AccountType extends AbstractType
                 ],
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Présentation détaillée',
+                'label' => 'Présentation détaillée *',
                 'attr' => ['placeholder' => 'Votre présentation détaillée'],
                 'constraints' => [
                     new NotBlank([

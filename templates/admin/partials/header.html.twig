@@ -6,28 +6,28 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
+            <li class="nav-item {% if app.request.get('_route') =='admin_dashboard' %} active{% endif %}">
                 <a class="nav-link"  href="{{ path('admin_dashboard') }}">
                    <i class="fas fa-chart-line "></i> Dashboard
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if app.request.get('_route') =='admin_adverts_index' %} active{% endif %}">
                 <a class="nav-link" href="{{ path('admin_adverts_index') }}">
                     <i class="fas fa-hotel "></i> Annonces
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if app.request.get('_route') =='admin_bookings_index' %} active{% endif %}">
                 <a class="nav-link" href="{{ path('admin_bookings_index') }}">
                     <i class="fas fa-folder"></i> Réservations
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if app.request.get('_route') =='admin_comments_index' %} active{% endif %}">
                 <a class="nav-link" href="{{ path('admin_comments_index') }}">
                     <i class="fas fa-comments"></i>Commentaires
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
+            <li class="nav-item{% if app.request.get('_route') =='admin_users_index' %} active{% endif %}">
+                <a class="nav-link" href="{{ path('admin_users_index') }}">
                     <i class="fas fa-users"></i>Utilisateurs
                 </a>
             </li>

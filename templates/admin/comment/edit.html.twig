@@ -8,7 +8,7 @@
         <div class="alert alert-info">
            <strong>Annonce liée :</strong> {{ comment.advert.title }} <br>
             <strong>Auteur :</strong> {{ comment.author }} <br>
-            <strong>Note donnée : {{ comment.rating }}</strong><br>
+            <strong>Note donnée : </strong>{{ comment.rating }}<br>
             <strong> Date de création :</strong> {{ comment.createdAt | date('d/m/Y à H:i')  }}
         </div>
         {{ form_start(form) }}

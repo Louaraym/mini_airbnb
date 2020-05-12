@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CommentAdminController extends AbstractController
+class AdminCommentController extends AbstractController
 {
     /**
      * @Route("/admin/comments/{page}", name="admin_comments_index")

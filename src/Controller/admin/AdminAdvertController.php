@@ -12,10 +12,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class AdvertAdminController
+ * Class AdminAdvertController
  * @package App\Controller\admin
  */
-class AdvertAdminController extends AbstractController
+class AdminAdvertController extends AbstractController
 {
     /**
      * @Route("/admin/adverts/{page}", name="admin_adverts_index", requirements={"page"="\d+"})

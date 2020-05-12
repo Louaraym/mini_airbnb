@@ -12,10 +12,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class BookingAdminController
+ * Class AdminBookingController
  * @package App\Controller\admin
  */
-class BookingAdminController extends AbstractController
+class AdminBookingController extends AbstractController
 {
     /**
      * @Route("/admin/bookings/{page}", name="admin_bookings_index", methods={"GET"})

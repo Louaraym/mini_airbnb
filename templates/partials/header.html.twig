@@ -6,10 +6,10 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link"  href="{{ path('home') }}">Accueil <span class="sr-only">(current)</span></a>
+            <li class="nav-item {% if app.request.get('_route') =='home' %} active {% endif %}">
+                <a class="nav-link"  href="{{ path('home') }}">Accueil</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if app.request.get('_route') =='advert_index' %} active {% endif %}">
                 <a class="nav-link" href="{{ path('advert_index') }}">Annonces</a>
             </li>
         </ul>
@@ -43,10 +43,10 @@
                     </div>
                 </li>
             {% else %}
-                <li class="nav-item">
+                <li class="nav-item {% if app.request.get('_route') =='app_register' %} active {% endif %}">
                     <a class="nav-link"  href="{{ path('app_register') }}">Inscription</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {% if app.request.get('_route') =='app_login' %} active{% endif %}">
                     <a class="nav-link" href="{{ path('app_login') }}">Mon Compte</a>
                 </li>
             {% endif %}

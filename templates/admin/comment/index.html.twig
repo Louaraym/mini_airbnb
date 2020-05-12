@@ -23,11 +23,14 @@
                     <td>{{ comment.id }}</td>
                     <td>{{ comment.createdAt | date('d/m/Y à H:i') }}</td>
                     <td>
+                        {% if comment.author.avatarUrl %}
                         <img src="{{ comment.author.avatarUrl }}"
                              alt="Avatar de {{ comment.author.fullName }}"
                              class="rounded-circle avatar-small"
                         >
-                        {{ comment.author.fullName }}
+                        {% else %}
+                            <img src="{{ '/images/avatar_profile.png' }}" class="rounded-circle avatar-small" alt="Avatar de {{ comment.author.fullName }} ">
+                        {% endif %} {{ comment.author.fullName }}
                     </td>
                     <td width="30%">
                         {{ comment.content  }}

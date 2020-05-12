@@ -1,0 +1,72 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administratui des utilisateurs{% endblock %}
+
+{% block body %}
+    <div class="container-fluid text-center">
+        <h1 class="my-2">Gestion des Utilisateurs </h1>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date d'inscription</th>
+                <th>Nom</th>
+                <th>Rôle</th>
+                <th>Annonces</th>
+                <th>Réservations</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in pagination.data %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{user.registeredAt | date('d/m/Y à H:i') }}</td>
+                    <td>
+                        {% if user.avatarUrl %}
+                        <img src="{{ user.avatarUrl }}"
+                             alt="Avatar de {{ user.fullName }}"
+                             class="rounded-circle avatar-small"
+                        >
+                        {% else %}
+                            <img src="{{ '/images/avatar_profile.png' }}" class="rounded-circle avatar-small" alt="Avatar de {{ user.fullName }} ">
+                        {% endif %}
+                        {{ user.fullName }}
+                    </td>
+                    <td>
+                        {% for role in user.roles %}
+                            {{ role }}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <span class="badge badge-primary rounded py-1 px-3">
+                            {{ user.adverts |length }}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="badge badge-primary rounded py-1 px-3">
+                            {{ user.bookings | length }}
+                        </span>
+                    </td>
+                    <td class="d-flex">
+                        <a href="{{ path('user_show', {'slug': user.slug, 'id': user.id}) }}">
+                            <i class="fas fa-eye  mr-2" style="font-size: 1.5em"></i>
+                        </a>
+                        <a href="{{ path('admin_user_edit', {'id': user.id}) }}" title="éditer">
+                            <i class="fas fa-edit" style="font-size: 1.5em"></i>
+                        </a>
+                        {% include'admin/partials/_delete_form.html.twig' with
+                            {'route': 'admin_user_delete', 'param': { 'id': user.id }, 'id': user.id, }
+                        %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6" class="text-center">Aucune donnée rétrouvée</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {{ pagination.display }}
+    </div>
+{% endblock %}
