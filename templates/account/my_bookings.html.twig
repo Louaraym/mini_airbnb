@@ -29,7 +29,7 @@
                 <div class="col-md-8">
                     <h4>{{ booking.advert.title }}</h4>
                     <p>
-                        Réservation <strong>n°{{ booking.advert.id }}</strong><br>
+                        Réservation <strong>n°{{ booking.id }}</strong><br>
                         Du {{ booking.startDate | date('d/m/Y') }} au
                         {{ booking.endDate | date('d/m/Y')}} ({{ booking.amount| number_format(2, ',', ' ')}} €)
                     </p>

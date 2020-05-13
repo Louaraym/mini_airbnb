@@ -92,13 +92,12 @@ class Booking
         return $this->endDate->diff($this->startDate)->days;
     }
 
-
     /**
      * @return bool
      */
     public function isBookableDates(): bool
     {
-        // Get available days
+        // Get unavailable days
         $unavailableDays = $this->advert->getUnavailableDays();
         // Get booking days
         $bookingDays = $this->getBookingDays();

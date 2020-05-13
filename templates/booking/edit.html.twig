@@ -9,8 +9,8 @@
 {% block title %}Modification de la réservation N°{{ booking.id }}{% endblock %}
 
 {% block body %}
-   <div class="container my-4">
-       <h1 class="text-center">Modifier la réservation N°{{ booking.id }}</h1>
+   <div class="container mb-5" >
+       <h1 class="text-center" style="margin-top: 10px">Modifier la réservation N°{{ booking.id }}</h1>
 
        {{ include('booking/_form.html.twig', {'amount': booking.amount| number_format(2, ',', ' '), 'button_label': 'Modifier la réservation'}) }}
 

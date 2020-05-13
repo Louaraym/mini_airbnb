@@ -158,6 +158,7 @@ class Advert
     public function getUnavailableDays(): array
     {
         $unavailableDays = [];
+        $theDays =[];
 
         foreach ($this->bookings as $booking) {
             // Get booking days in Timestamp[]
@@ -171,9 +172,10 @@ class Advert
                 return new \DateTime(date('Y-m-d', $dayTimestamp));
             }, $result);
 
-            $unavailableDays = array_merge($unavailableDays, $days);
+            $theDays = $days;
         }
 
+        $unavailableDays = array_merge($unavailableDays, $theDays);
         return $unavailableDays;
     }
 
