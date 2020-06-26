@@ -18,12 +18,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminAdvertController extends AbstractController
 {
     /**
-     * @Route("/admin/adverts/{page}", name="admin_adverts_index", requirements={"page"="\d+"})
+     * @Route("/admin/adverts/{page<\d+>?1}", name="admin_adverts_index", requirements={"page"="\d+"})
      * @param Pagination $pagination
      * @param int $page
      * @return Response
      */
-    public function index(Pagination $pagination, $page = 1): Response
+    public function index(Pagination $pagination,int $page): Response
     {
         $pagination->setClassName(Advert::class)
                     ->setLimit(10)

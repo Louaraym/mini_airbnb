@@ -19,12 +19,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminUserController extends AbstractController
 {
     /**
-     * @Route("/users/{page}", name="admin_users_index")
+     * @Route("/users/{page<\d+>?1}", name="admin_users_index")
      * @param Pagination $pagination
      * @param int $page
      * @return Response
      */
-    public function index(Pagination $pagination, $page =1): Response
+    public function index(Pagination $pagination,int $page): Response
     {
         $pagination->setClassName(User::class)
             ->setCurrentPage($page)

@@ -12,7 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method PasswordEdit[]    findAll()
  * @method PasswordEdit[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PaaswordEditRepository extends ServiceEntityRepository
+class PasswordEditRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

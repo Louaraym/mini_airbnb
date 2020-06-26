@@ -57,16 +57,16 @@
         ]
     },
     "doctrine/doctrine-migrations-bundle": {
-        "version": "1.2",
+        "version": "2.2",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "master",
-            "version": "1.2",
-            "ref": "c1431086fec31f17fbcfe6d6d7e92059458facc1"
+            "version": "2.2",
+            "ref": "baaa439e3e3179e69e3da84b671f0a3e4a2f56ad"
         },
         "files": [
             "./config/packages/doctrine_migrations.yaml",
-            "./src/Migrations/.gitignore"
+            "./migrations/.gitignore"
         ]
     },
     "doctrine/event-manager": {
@@ -82,7 +82,7 @@
         "version": "1.2.0"
     },
     "doctrine/migrations": {
-        "version": "2.2.1"
+        "version": "3.0.1"
     },
     "doctrine/orm": {
         "version": "v2.7.2"
@@ -93,14 +93,11 @@
     "doctrine/reflection": {
         "version": "1.2.1"
     },
-    "egulias/email-validator": {
-        "version": "2.1.17"
+    "doctrine/sql-formatter": {
+        "version": "1.0.1"
     },
     "fzaninotto/faker": {
         "version": "v1.9.1"
-    },
-    "jdorn/sql-formatter": {
-        "version": "v1.2.17"
     },
     "knplabs/knp-time-bundle": {
         "version": "v1.11.0"
@@ -154,6 +151,18 @@
         },
         "files": [
             "./config/packages/sensio_framework_extra.yaml"
+        ]
+    },
+    "sensiolabs/security-checker": {
+        "version": "4.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.0",
+            "ref": "160c9b600564faa1224e8f387d49ef13ceb8b793"
+        },
+        "files": [
+            "./config/packages/security_checker.yaml"
         ]
     },
     "symfony/apache-pack": {
@@ -297,18 +306,6 @@
     "symfony/intl": {
         "version": "v5.0.7"
     },
-    "symfony/mailer": {
-        "version": "4.3",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "4.3",
-            "ref": "15658c2a0176cda2e7dba66276a2030b52bd81b2"
-        },
-        "files": [
-            "./config/packages/mailer.yaml"
-        ]
-    },
     "symfony/maker-bundle": {
         "version": "1.0",
         "recipe": {
@@ -336,18 +333,6 @@
             "./config/packages/dev/monolog.yaml",
             "./config/packages/prod/monolog.yaml",
             "./config/packages/test/monolog.yaml"
-        ]
-    },
-    "symfony/notifier": {
-        "version": "5.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "5.0",
-            "ref": "c31585e252b32fe0e1f30b1f256af553f4a06eb9"
-        },
-        "files": [
-            "./config/packages/notifier.yaml"
         ]
     },
     "symfony/options-resolver": {
@@ -388,6 +373,9 @@
     },
     "symfony/polyfill-php73": {
         "version": "v1.15.0"
+    },
+    "symfony/polyfill-php80": {
+        "version": "v1.17.1"
     },
     "symfony/process": {
         "version": "v5.0.7"

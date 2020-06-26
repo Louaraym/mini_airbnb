@@ -5,6 +5,7 @@ namespace App\Service;
 
 
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Environment;
 use Twig\Error\LoaderError;
@@ -36,7 +37,7 @@ class Pagination
 
     /**
      * @return false|float|void
-     * @throws \Exception
+     * @throws Exception
      */
     public function getPages()
     {
@@ -54,6 +55,7 @@ class Pagination
 
     /**
      * @return object[]
+     * @throws Exception
      */
     public function getData(): array
     {
@@ -61,6 +63,7 @@ class Pagination
             throw new \RuntimeException("Vous n'avez pas spécifié l'entité sur laquelle nous devons paginer ! 
             Utilisez la méthode setClassName() de votre objet Pagination !");
         }
+
         //Get offset
         $offset = ($this->currentPage * $this->limit) - $this->limit;
         //Get repository
@@ -73,6 +76,7 @@ class Pagination
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws Exception
      */
     public function display(): void
     {

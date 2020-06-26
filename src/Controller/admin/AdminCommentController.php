@@ -6,6 +6,7 @@ use App\Entity\Comment;
 use App\Form\AdminCommentType;
 use App\Service\Pagination;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,12 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminCommentController extends AbstractController
 {
     /**
-     * @Route("/admin/comments/{page}", name="admin_comments_index")
+     * @Route("/admin/comments/{page<\d+>?1}", name="admin_comments_index")
      * @param Pagination $pagination
      * @param int $page
      * @return Response
+     * @throws Exception
      */
-    public function index(Pagination $pagination, $page = 1): Response
+    public function index(Pagination $pagination,int $page): Response
     {
         $pagination->setClassName(Comment::class)
                     ->setCurrentPage($page)
